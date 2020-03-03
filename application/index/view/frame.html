@@ -44,10 +44,10 @@
     <div class="mdui-drawer"  id="left-drawer">
         <ul class="mdui-list" mdui-collapse="{accordion: true}">
         
-            <li class="mdui-list-item mdui-ripple">
+            <a href="{:url('index/index')}"><li class="mdui-list-item mdui-ripple">
                 <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
                 <div class="mdui-list-item-content">主页</div>
-            </li>
+            </li></a>
         
             <li class="mdui-list-item mdui-ripple">
                 <i class="mdui-list-item-icon mdui-icon material-icons">dashboard</i>
@@ -61,11 +61,11 @@
                     <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                 </div>
                 <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
-                    <li class="mdui-list-item mdui-ripple">等级风云榜</li>
-                    <li class="mdui-list-item mdui-ripple">今日风云榜</li>
-                    <li class="mdui-list-item mdui-ripple">昨日风云榜</li>
-                    <li class="mdui-list-item mdui-ripple">拼字房间榜</li>
-                    <li class="mdui-list-item mdui-ripple">我的房间</li>
+                    <a href="{:url('index/rank?type=level')}"><li class="mdui-list-item mdui-ripple">等级风云榜</li></a>
+                    <a href="{:url('index/rank?type=today')}"><li class="mdui-list-item mdui-ripple">今日风云榜</li></a>
+                    <a href="{:url('index/rank?type=yestoday')}"><li class="mdui-list-item mdui-ripple">昨日风云榜</li></a>
+                    <a href="{:url('index/rank?type=room')}"><li class="mdui-list-item mdui-ripple">拼字房间榜</li></a>
+                    <a href="{:url('index/rank?type=myroom')}"><li class="mdui-list-item mdui-ripple">我的房间</li></a>
                 </ul>
             </li>
         
@@ -92,5 +92,8 @@
     </div>
 
     <!-- 正文内容 -->
-    {block name="content"} {/block}
+    <div class="mdui-container mdui-m-t-2">
+        {block name="content"} {/block}
+    </div>
+
 </body>

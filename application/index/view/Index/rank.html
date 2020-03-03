@@ -3,7 +3,22 @@
 <title>{block name="title"}码字风云榜{/block}</title>
 
 {block name="content" }
+<table class="mdui-table">
+<tr class="info">
+    <th>排名</th>
+    <th>昵称</th>
+    <th>等级</th>
+    <th>总字数</th>
+    <th>今日</th>
+    <th>昨日</th>
+    <th>勋章</th>
+</tr>
+{volist name="users" id="user" key="key"}
+<tr>
+    <td>{$key}</td>
+    <td>{$user->getData('username')}</td>
+</tr>
+{/volist}
 
-
-
+</table>
 {/block}
