@@ -20,16 +20,25 @@
             
             <!-- 右上角菜单 -->
             <ul class="mdui-menu" id="appbar-menu">
+                <!-- 根据有没有登录，使用不同的菜单 -->
+                {eq name="$Think.session.user_id" value=""}
                 <li class="mdui-menu-item">
-                    <a href="javascript:;" class="mdui-ripple">
+                    <a href="{:url('User/goLogin')}" class="mdui-ripple">
                         <i class="mdui-menu-item-icon mdui-icon material-icons">person</i>登录
                     </a>
                 </li>
                 <li class="mdui-menu-item">
-                    <a href="javascript:;" class="mdui-ripple">
+                    <a href="{:url('User/goRegister')}" class="mdui-ripple">
                         <i class="mdui-menu-item-icon mdui-icon material-icons">person_add</i>注册
                     </a>
                 </li>
+                {else /}
+                <li class="mdui-menu-item">
+                    <a href="javascript:;" class="mdui-ripple">
+                        <i class="mdui-menu-item-icon mdui-icon material-icons">directions_run</i>注销
+                    </a>
+                </li>
+                {/eq}
                 <li class="mdui-divider"></li>
                 <li class="mdui-menu-item">
                     <a href="javascript:;" class="mdui-ripple">

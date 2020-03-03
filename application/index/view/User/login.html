@@ -1,0 +1,34 @@
+{extend name="frame" /}
+
+<title>{block name="title"}登录{/block}</title>
+
+{block name="content"}
+
+<form action="{:url('User/login')}" method="post">
+    <div class="mdui-card-content">
+        <div class="mdui-textfield mdui-textfield-floating-label">
+            <label class="mdui-textfield-label">用户名</label>
+            <input class="mdui-textfield-input" type="text" name="username" id="username" />
+        </div>
+        <div class="mdui-textfield mdui-textfield-floating-label">
+            <label class="mdui-textfield-label">密码</label>
+            <input class="mdui-textfield-input" type="text" name="password" id="password" />
+        </div>
+    </div>
+    
+    <!-- 卡片的按钮 -->
+    <div class="mdui-card-actions">
+        <button class="mdui-btn mdui-ripple mdui-float-left" type="submit">登录</button>
+        <button class="mdui-btn mdui-ripple mdui-float-right" type="submit" name='register'
+            mdui-dialog="{target: '#register_dialog'}">注册</button>
+        <div class="mdui-dialog" id="register_dialog">
+            <div class="mdui-dialog-title">注册</div>
+            <div class="mdui-dialog-content">不支持网页版注册，请在客户端操作</div>
+            <div class="mdui-dialog-actions">
+                <button class="mdui-btn mdui-ripple" mdui-dialog-close>确定</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{/block}
