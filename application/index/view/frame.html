@@ -1,0 +1,96 @@
+<head>
+    <meta charset="utf-8">
+    <title>{block name="title"}写作天下{/block}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/css/mdui.min.css">
+    <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/js/mdui.min.js"></script>
+</head>
+
+<body class="mdui-drawer-body-left">
+
+    <!-- 应用栏 -->
+    <div class="mdui-appbar mdui-appbar-scroll-hide">
+        <div class="mdui-toolbar mdui-color-theme">
+            <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer'}"><i class="mdui-icon material-icons">menu</i></a>
+            <a class="mdui-typo-headline">{block name="title"}写作天下{/block}</a>
+            <div class="mdui-toolbar-spacer"></div>
+            <a class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>
+            <a class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#appbar-menu'}"><i class="mdui-icon material-icons">more_vert</i></a>
+            
+            <!-- 右上角菜单 -->
+            <ul class="mdui-menu" id="appbar-menu">
+                <li class="mdui-menu-item">
+                    <a href="javascript:;" class="mdui-ripple">
+                        <i class="mdui-menu-item-icon mdui-icon material-icons">person</i>登录
+                    </a>
+                </li>
+                <li class="mdui-menu-item">
+                    <a href="javascript:;" class="mdui-ripple">
+                        <i class="mdui-menu-item-icon mdui-icon material-icons">person_add</i>注册
+                    </a>
+                </li>
+                <li class="mdui-divider"></li>
+                <li class="mdui-menu-item">
+                    <a href="javascript:;" class="mdui-ripple">
+                        <i class="mdui-menu-item-icon mdui-icon material-icons">file_download</i>客户端下载
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 默认抽屉栏在左侧 -->
+    <div class="mdui-drawer"  id="left-drawer">
+        <ul class="mdui-list" mdui-collapse="{accordion: true}">
+        
+            <li class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
+                <div class="mdui-list-item-content">主页</div>
+            </li>
+        
+            <li class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">dashboard</i>
+                <div class="mdui-list-item-content">小说广场</div>
+            </li>
+            
+            <li class="mdui-collapse-item mdui-collapse-item-open">
+                <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">device_hub</i>
+                    <div class="mdui-list-item-content">码字风云榜</div>
+                    <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                </div>
+                <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                    <li class="mdui-list-item mdui-ripple">等级风云榜</li>
+                    <li class="mdui-list-item mdui-ripple">今日风云榜</li>
+                    <li class="mdui-list-item mdui-ripple">昨日风云榜</li>
+                    <li class="mdui-list-item mdui-ripple">拼字房间榜</li>
+                    <li class="mdui-list-item mdui-ripple">我的房间</li>
+                </ul>
+            </li>
+        
+            <li class="mdui-collapse-item mdui-collapse-item-open">
+                <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">people</i>
+                    <div class="mdui-list-item-content">我的作品</div>
+                    <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                </div>
+                <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                    <li class="mdui-list-item mdui-ripple">我的书架</li>
+                    <li class="mdui-list-item mdui-ripple">发布小说</li>
+                    <li class="mdui-list-item mdui-ripple">每日字数</li>
+                    <li class="mdui-list-item mdui-ripple">回收站</li>
+                </ul>
+            </li>
+        
+            <li class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">shopping_cart</i>
+                <div class="mdui-list-item-content">VIP用户</div>
+            </li>
+        
+        </ul>
+    </div>
+
+    <!-- 正文内容 -->
+    {block name="content"} {/block}
+</body>
