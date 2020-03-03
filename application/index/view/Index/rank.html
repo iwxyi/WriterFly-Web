@@ -17,6 +17,10 @@
 <tr>
     <td>{$key}</td>
     <td>{$user->getData('username')}</td>
+    <td>{$user->getData('level')}</td>
+    <td>{$user->getData('allwords')}</td>
+    <td>{$user->getData('allwords') - $user->getData('allwords_yestoday')}</td>
+    <td>{$user->getData('words_yestoday')}</td>
 </tr>
 {/volist}
 
