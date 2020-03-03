@@ -1,0 +1,32 @@
+{extend name="frame" /}
+
+<title>{block name="title"}拼字房间{/block}</title>
+
+{block name="content" }
+
+<div class="mdui-panel" mdui-panel>
+
+    {volist name="rooms" id="room" key="key"}
+    <div class="mdui-panel-item">
+        <div class="mdui-panel-item-header">
+            <div class="mdui-panel-item-title">{$room->roomname}</div>
+            <div class="mdui-panel-item-summary">{$room->level}级</div>
+            <div class="mdui-panel-item-summary">{$room->number}人</div>
+            <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <div class="mdui-panel-item-body">
+            <p>字数：{$room->allwords}</p>
+            <p>今日：{$room->allwords - $room->allwords_yestoday}</p>
+            <p>昨日：{$room->words_yestoday}</p>
+            <p>人数：{$room->number} / {$room->max_number}</p>
+            <div class="mdui-panel-item-actions">
+                <a href="{:url('User/joinRoom?room_id=' . $room->roomID)}" target='_blank'><button class="mdui-btn mdui-ripple">加入房间</button></a>
+            </div>
+        </div>
+    </div>
+
+    {/volist}
+
+</div>
+
+{/block}

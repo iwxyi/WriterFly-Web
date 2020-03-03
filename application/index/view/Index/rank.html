@@ -24,11 +24,11 @@
     </td>
     
     {gt name="user.sync_time" value="$online_time"}
-        <td></td><font color='red'>{$user->getData('username')}</font>
-        {gt name="user.VIP_deadline" value="time"}<font color='red'>[VIP]</font>{/gt}</td>
+        <td title="在线"><font color='green'>{$user->getData('username')}</font>
+        {gt name="user.VIP_deadline" value="$time"}<font color='red'>[VIP]</font>{/gt}</td>
     {else /}
         <td>{$user->getData('username')}
-            {gt name="user.VIP_deadline" value="time"}<font color='red'> [VIP]</font>{/gt}</td>
+            {gt name="user.VIP_deadline" value="$time"}<font color='red'> [VIP]</font>{/gt}</td>
     {/gt}
 
     <td>{$user->getData('level')}</td>
