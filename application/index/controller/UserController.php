@@ -48,13 +48,13 @@ class UserController extends Controller
     
     public function logOut()
     {
-        if (User::logOut())
+        if (UserModel::logOut())
         {
-            return url('Index/rank');
+            return $this->success('退出成功', url('Index/index'));
         }
         else
         {
-            return $this->error('注销失败', url('index'));
+            return $this->error('退出失败', url('index'));
         }
     }
     
@@ -68,9 +68,26 @@ class UserController extends Controller
         if (is_null($user))
             return $this->goLogin();
         if ($user->getData('roomID'))
-            return $this->error('您已加入房间');
+        {
+            session('room_id', $roomID);
+            return $this->error('您已加入房间', url('Index/rank?type=myroom'));
+        }
         // 加入房间
         $user->roomID = $roomID;
+        session('room_id', $roomID);
         return $this->success('加入房间成功', url('Index/rank?type=myroom'));
+    }
+    
+    public function exitRoom()
+    {
+        $roomID = session('room_id');
+        if (is_null(RoomModel::get(['roomID' => $roomID])))
+            return $this->error('不存在这个房间');
+        $user = UserModel::currentUser();
+        if (is_null($user))
+            return $this->goLogin();
+        $user->room_id = '';
+        session('room_id', null);
+        return $this->success('退出房间成功', url('Index/rank?type=room'));
     }
 }

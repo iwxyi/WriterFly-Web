@@ -16,15 +16,22 @@ class IndexController extends Controller
     {
         $type = Request::instance()->param('type');
         $sort = $type;
+        $this->assign('rank_name', '码字风云榜');
         if (is_null($type) || $type == 'level')
         {
             $type = 'level';
             $sort = 'level desc';
         }
         else if ($type == 'yestoday')
+        {
             $sort = 'words_yestoday desc';
+            $this->assign('rank_name', '昨日风云榜');
+        }
         else if ($type == 'today')
+        {
             $sort = new \think\db\Expression('allwords - allwords_yestoday desc');
+            $this->assign('rank_name', '今日风云榜');
+        }
         else if ($type == 'room' || $type == 'myroom')
             $sort = 'level DESC';
         else
@@ -57,13 +64,17 @@ class IndexController extends Controller
         }
         else if ($type == 'myroom')
         {
-            $roomID = Request::instance()->param('room_id');
+            $roomID = session('room_id');
+            if ($roomID == '')
+                return $this->error('您尚未加入房间', url('Index/rank?type=room'));
             $users = new UserModel();
             $time = time();
-            $users->where("room_id = $roomID")
+            $users->where("roomID = '$roomID'")
                   ->order($sort);
             $users = $users->select();
             
+            $room = RoomModel::get(['roomID' => $roomID]);
+            $this->assign('rank_name', $room->roomname);
             $this->assign('users', $users);
             $this->assign('time', $time);
             $this->assign('online_time', $time - 900);

@@ -9,10 +9,11 @@ class UserModel extends Model
     static public function login($username,  $password)
 	{
 		$map = array('username' => $username);
-		$User = self::get($map); // 同时赋值给自己？
+		$user = self::get($map); // 同时赋值给自己？
 
-		if (!is_null($User) && $User->checkPassword($password)) {
-			session('user_id', $User->getData('user_id'));
+		if (!is_null($user) && $user->checkPassword($password)) {
+			session('user_id', $user->getData('userID'));
+            session('room_id', $user->getData('roomID'));
 			return true;
 		}
 		return false;
@@ -48,7 +49,7 @@ class UserModel extends Model
         $user_id = session('user_id');
         if (empty($user_id))
             return null;
-        return get(['userID' => $user_id]);
+        return UserModel::get(['userID' => $user_id]);
     }
     
     public function getName()

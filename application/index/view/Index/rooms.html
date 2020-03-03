@@ -7,7 +7,7 @@
 <div class="mdui-panel" mdui-panel>
 
     {volist name="rooms" id="room" key="key"}
-    <div class="mdui-panel-item">
+    <div class="mdui-panel-item mdui-color-blue-200">
         <div class="mdui-panel-item-header">
             <div class="mdui-panel-item-title">{$room->roomname}</div>
             <div class="mdui-panel-item-summary">{$room->level}级</div>
@@ -19,9 +19,20 @@
             <p>今日：{$room->allwords - $room->allwords_yestoday}</p>
             <p>昨日：{$room->words_yestoday}</p>
             <p>人数：{$room->number} / {$room->max_number}</p>
+            {neq name="$Think.session.user_id" value=""} <!-- 已登录 -->
+            {eq name="$Think.session.room_id" value=""} <!-- 未加入房间 -->
             <div class="mdui-panel-item-actions">
-                <a href="{:url('User/joinRoom?room_id=' . $room->roomID)}" target='_blank'><button class="mdui-btn mdui-ripple">加入房间</button></a>
+                <a href="{:url('User/joinRoom?room_id=' . $room->roomID)}"><button class="mdui-btn mdui-ripple">加入房间</button></a>
             </div>
+            {else /} <!-- 已加入房间 -->
+            {eq name="$Think.session.room_id" value="$room->roomID"} <!-- 加入的是这个房间 -->
+            <div class="mdui-panel-item-actions">
+                <a href="{:url('User/exitRoom')}"><button
+                        class="mdui-btn mdui-ripple">退出房间</button></a>
+            </div>
+            {/eq}
+            {/eq}
+            {/neq}
         </div>
     </div>
 

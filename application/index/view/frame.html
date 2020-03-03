@@ -7,10 +7,10 @@
     <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/js/mdui.min.js"></script>
 </head>
 
-<body class="mdui-drawer-body-left">
+<body class="mdui-appbar-with-toolbar mdui-drawer-body-left">
 
     <!-- 应用栏 -->
-    <div class="mdui-appbar">
+    <div class="mdui-appbar mdui-appbar-fixed">
         <div class="mdui-toolbar mdui-color-theme">
             <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer'}"><i class="mdui-icon material-icons">menu</i></a>
             <a class="mdui-typo-headline">{block name="title"}写作天下{/block}</a>
@@ -34,14 +34,14 @@
                 </li>
                 {else /}
                 <li class="mdui-menu-item">
-                    <a href="javascript:;" class="mdui-ripple">
-                        <i class="mdui-menu-item-icon mdui-icon material-icons">directions_run</i>注销
+                    <a href="{:url('User/logOut')}" class="mdui-ripple">
+                        <i class="mdui-menu-item-icon mdui-icon material-icons">directions_run</i>退出账号
                     </a>
                 </li>
                 {/eq}
                 <li class="mdui-divider"></li>
                 <li class="mdui-menu-item">
-                    <a href="javascript:;" class="mdui-ripple">
+                    <a href="http://writerfly.cn/download" class="mdui-ripple">
                         <i class="mdui-menu-item-icon mdui-icon material-icons">file_download</i>客户端下载
                     </a>
                 </li>
@@ -73,7 +73,7 @@
                     <a href="{:url('index/rank?type=level')}"><li class="mdui-list-item mdui-ripple">等级风云榜</li></a>
                     <a href="{:url('index/rank?type=today')}"><li class="mdui-list-item mdui-ripple">今日风云榜</li></a>
                     <a href="{:url('index/rank?type=yestoday')}"><li class="mdui-list-item mdui-ripple">昨日风云榜</li></a>
-                    <a href="{:url('index/rank?type=room')}"><li class="mdui-list-item mdui-ripple">拼字房间榜</li></a>
+                    <a href="{:url('index/rank?type=room')}"><li class="mdui-list-item mdui-ripple">拼字房间</li></a>
                     <a href="{:url('index/rank?type=myroom')}"><li class="mdui-list-item mdui-ripple">我的房间</li></a>
                 </ul>
             </li>
