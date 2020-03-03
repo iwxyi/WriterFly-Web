@@ -15,12 +15,52 @@
 </tr>
 {volist name="users" id="user" key="key"}
 <tr>
-    <td>{$key}</td>
-    <td>{$user->getData('username')}</td>
+    <td>
+        {lt name="key" value="4"}
+            <font color='#DAA520'>{$key}</font>
+        {else /}
+            {$key}
+        {/lt}
+    </td>
+    
+    {gt name="user.sync_time" value="$online_time"}
+        <td></td><font color='red'>{$user->getData('username')}</font>
+        {gt name="user.VIP_deadline" value="time"}<font color='red'>[VIP]</font>{/gt}</td>
+    {else /}
+        <td>{$user->getData('username')}
+            {gt name="user.VIP_deadline" value="time"}<font color='red'> [VIP]</font>{/gt}</td>
+    {/gt}
+
     <td>{$user->getData('level')}</td>
     <td>{$user->getData('allwords')}</td>
     <td>{$user->getData('allwords') - $user->getData('allwords_yestoday')}</td>
     <td>{$user->getData('words_yestoday')}</td>
+    <td>
+        {eq name="user.medal_0" value="1"}
+            <img title='连续码字超过一年' src='__STATIC__/view/img/dwc_0.png' style='margin-left:-5px;margin-right:-5px;' />
+        {/eq}
+        {eq name="user.medal_1000" value="1"}
+            <img title='连续码1000字超过100天' src='__STATIC__/view/img/dwc_1000.png' style='margin-left:-5px;margin-right:-5px;' />
+        {/eq}
+        {eq name="user.medal_3000" value="1"}
+            <img title='连续码3000字超过一个月' src='__STATIC__/view/img/dwc_3000.png' style='margin-left:-5px;margin-right:-5px;' />
+        {/eq}
+        {eq name="user.medal_5000" value="1"}
+            <img title='连续码5000字超过十五天' src='__STATIC__/view/img/dwc_5000.png' style='margin-left:-5px;margin-right:-5px;' />
+        {/eq}
+        {eq name="user.medal_8000" value="1"}
+            <img title='连续码8000字超过十天' src='__STATIC__/view/img/dwc_8000.png' style='margin-left:-5px;margin-right:-5px;' />
+        {/eq}
+        {eq name="user.medal_10000" value="1"}
+            <img title='连续码10000字超过五天' src='__STATIC__/view/img/dwc_10000.png' style='margin-left:-5px;margin-right:-5px;' />
+        {/eq}
+        {eq name="user.medal_15000" value="1"}
+            <img title='连续码15000字超过三天' src='__STATIC__/view/img/dwc_15000.png' style='margin-left:-5px;margin-right:-5px;' />
+        {/eq}
+        {eq name="user.medal_30000" value="1"}
+            <img title='一天码30000字的大神' src='__STATIC__/view/img/dwc_3000.png' style='margin-left:-5px;margin-right:-5px;' />
+        {/eq}
+    </td>
 </tr>
 {/volist}
 

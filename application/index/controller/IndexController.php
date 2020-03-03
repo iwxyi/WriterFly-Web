@@ -27,11 +27,14 @@ class IndexController extends Controller
         if ($type != 'room' && $type != 'myroom')
         {
             $users = new UserModel();
-            $users->where("allwords>allwords_yestoday or words_yestoday>0 or VIP_deadline>0")
+            $time = time();
+            $users->where("allwords>allwords_yestoday or words_yestoday>0 or VIP_deadline>0 or sync_time>$time")
                   ->order($sort);
             $users = $users->select();
             
             $this->assign('users', $users);
+            $this->assign('time', $time);
+            $this->assign('online_time', $time - 900);
             return $this->fetch('rank');
         }
     }
