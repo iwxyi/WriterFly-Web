@@ -15,14 +15,32 @@
         </div>
         <div class="mdui-panel-item-body">
             <div class="mdui-panel-item-actions">
-                <a href="{:url('Novel/chapters?novelname=' . $novel->name)}"><button class="mdui-btn mdui-ripple">查看与编辑</button></a>
-                <a href="{:url('Novel/delete?novelname=' . $novel->name)}"><button class="mdui-btn mdui-ripple">删除</button></a>
+                <a href="{:url('Novel/chapters?novelname=' . $novel->name)}"><button class="mdui-btn mdui-ripple">目录</button></a>
+                <button class="mdui-btn mdui-ripple" mdui-dialog="{target: '#delete-dialog-{$key}'}"><font color='gray'>删除</font></button>
             </div>
         </div>
     </div>
 
-    {/volist}
+    <div class="mdui-dialog" id="delete-dialog-{$key}">
+        <div class="mdui-dialog-title">提示</div>
+        <div class="mdui-dialog-content">暂时不支持网页版删除作品。</div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>
+                <font color='green'>取消</font>
+            </button>
+        </div>
+    </div>
 
+    <!-- <div class="mdui-dialog" id="delete-dialog-{$key}">
+        <div class="mdui-dialog-title">警告</div>
+        <div class="mdui-dialog-content">是否删除作品《{$novel->name}》？<br/><br/>暂时不支持在网页版回收站恢复；<br/>安全起见，客户端需手动删除。</div>
+        <div class="mdui-dialog-actions">
+            <a href="{:url('Novel/delete?novelname=' . $novel->name)}"><button class="mdui-btn mdui-ripple" mdui-dialog-close><font color='red'>删除</font></button></a>
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close><font color='green'>取消</font></button>
+        </div>
+    </div> -->
+
+    {/volist}
 </div>
 
 {/block}

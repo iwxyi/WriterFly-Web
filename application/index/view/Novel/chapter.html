@@ -1,0 +1,19 @@
+{extend name="frame" /}
+
+<title>{block name="title"}{$chapter->title}{/block}</title>
+
+{block name="content" }
+
+<!-- 标题 -->
+<div class="mdui-textfield mdui-textfield-floating-label">
+    <label class="mdui-textfield-label">标题</label>
+    <input class="mdui-textfield-input" type="text" value="{$chapter->title}"/>
+</div>
+
+<!-- 正文 -->
+<div class="mdui-textfield mdui-textfield-floating-label">
+    <label class="mdui-textfield-label">正文</label>
+    <textarea class="mdui-textfield-input">{:urldecode($chapter->body)}</textarea>
+</div>
+
+{/block}

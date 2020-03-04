@@ -63,6 +63,14 @@ class NovelController extends Controller
         return $this->fetch('chapters');
     }
     
+    public function chapter()
+    {
+        $chapterID = Request::instance()->param('chapter_id');
+        $chapter = ChapterModel::get(['chapterID' => $chapterID]);
+        $this->assign('chapter', $chapter);
+        return $this->fetch('chapter');
+    }
+    
     public function outline()
     {
         
