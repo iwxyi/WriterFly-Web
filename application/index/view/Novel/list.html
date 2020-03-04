@@ -15,8 +15,8 @@
         </div>
         <div class="mdui-panel-item-body">
             <div class="mdui-panel-item-actions">
-                <a href="{:url('Novel/dir')}"><button class="mdui-btn mdui-ripple">查看与编辑</button></a>
-                <a href="{:url('Novel/delete')}"><button class="mdui-btn mdui-ripple">删除</button></a>
+                <a href="{:url('Novel/chapters?novelname=' . $novel->name)}"><button class="mdui-btn mdui-ripple">查看与编辑</button></a>
+                <a href="{:url('Novel/delete?novelname=' . $novel->name)}"><button class="mdui-btn mdui-ripple">删除</button></a>
             </div>
         </div>
     </div>

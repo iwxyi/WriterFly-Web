@@ -3,6 +3,12 @@
 <title>{block name="title"}{$rank_name}{/block}</title>
 
 {block name="content" }
+
+<div class="mdui-chip mdui-m-a-2">
+    <span class="mdui-chip-icon"><i class="mdui-icon material-icons">face</i></span>
+    <span class="mdui-chip-title">当前在线人数：{$online_count}</span>
+</div>
+
 <table class="mdui-table">
 <tr class="info">
     <th>排名</th>

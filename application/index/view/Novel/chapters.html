@@ -1,0 +1,22 @@
+{extend name="frame" /}
+
+<title>{block name="title"}{$novelname}{/block}</title>
+
+{block name="content" }
+
+<ul class="mdui-list">
+    {volist name="chapters" id="chapter" key="key"}
+    {neq name="key" value="0"}
+        <li class="mdui-divider-inset mdui-m-y-0"></li>
+    {/neq}
+    <li class="mdui-list-item mdui-ripple">
+        <div class="mdui-list-item-avatar">{:mb_substr($chapter->title,0,1)}</div>
+        <div class="mdui-list-item-content">
+            <div class="mdui-list-item-title">{$chapter->title}</div>
+            <div class="mdui-list-item-text mdui-list-item-one-line">{:preg_replace("/^[\s　]+/","",$chapter->body)}</div>
+        </div>
+    </li>
+    {/volist}
+</ul>
+
+{/block}
