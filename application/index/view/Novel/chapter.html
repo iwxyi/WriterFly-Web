@@ -1,19 +1,87 @@
 {extend name="frame" /}
 
-<title>{block name="title"}{$chapter->title}{/block}</title>
+{block name="title"}{$chapter->title}{/block}
+
+{block name="appbar-btn"}
+<a onclick="save()" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">save</i></a>
+{/block}
 
 {block name="content" }
 
 <!-- 标题 -->
 <div class="mdui-textfield mdui-textfield-floating-label">
     <label class="mdui-textfield-label">标题</label>
-    <input class="mdui-textfield-input" type="text" value="{$chapter->title}"/>
+    <input class="mdui-textfield-input" type="text" id="chapter-title" value="{$chapter->title}"/>
 </div>
 
 <!-- 正文 -->
 <div class="mdui-textfield mdui-textfield-floating-label">
     <label class="mdui-textfield-label">正文</label>
-    <textarea class="mdui-textfield-input">{:urldecode($chapter->body)}</textarea>
+    <textarea class="mdui-textfield-input" id="chapter-body">{:urldecode($chapter->body)}</textarea>
 </div>
 
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    function save()
+    {
+        var chapterID = {$chapter->chapterID};
+        var url = '__URL__/saveChapter';
+        var title = document.getElementById("chapter-title").value;
+        var body = document.getElementById("chapter-body").value;
+        if (title == "") return;
+
+        // 去掉首尾空格
+        var noblank_name = title.replace(/(^\s*)|(\s*$)/g, "");
+        if (noblank_name != title) {
+            title = noblank_name;
+            document.getElementById("title").value = title;
+        }
+        
+        var XHR = null;
+        if (window.XMLHttpRequest) {
+            XHR = new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject) {
+            XHR = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        
+        var FD = new FormData();
+        FD.append('chapter_id', chapterID);
+        FD.append("title", title);
+        FD.append("body", body);
+
+        XHR.onreadystatechange = function () {
+            if (XHR.readyState == 4) {
+                if (XHR.status == 200)
+                {
+                    mdui.snackbar({
+                        message: '保存成功',
+                        /* buttonText: '发布', */
+                        onButtonClick: function () {
+
+                        },
+                    });
+
+                    save_time = (new Date()).getTime();
+                    save_text = body;
+                } else {
+                    mdui.snackbar({
+                        message: '保存失败' + XHR.status,
+                        buttonText: '使用客户端',
+                        onButtonClick: function () {
+                            console.log(XHR.responseText);
+                        },
+                    });
+                }
+            }
+        }
+        
+        XHR.open('POST', url, true);
+        XHR.send(FD);
+
+        return false;
+    }
+</script>
 {/block}

@@ -66,9 +66,27 @@ class NovelController extends Controller
     public function chapter()
     {
         $chapterID = Request::instance()->param('chapter_id');
-        $chapter = ChapterModel::get(['chapterID' => $chapterID]);
+        $chapter = ChapterModel::get(['chapterID' => $chapterID, 'userID' => session('user_id')]);
         $this->assign('chapter', $chapter);
         return $this->fetch('chapter');
+    }
+    
+    public function saveChapter()
+    {
+        $param = Request::instance()->param();
+        $chapterID = $param['chapter_id'];
+        $title = $param['title'];
+        $body = $param['body'];
+        $chapter = ChapterModel::get(['chapterID' => $chapterID]);
+        if (is_null($chapterID))
+            return $this->error('没有这个章节');
+        
+        $chapter['title'] = $title;
+        $chapter['body'] = $body;
+        $chapter['alter_time'] = $chapter['sync_time'] = time();
+        $chapter->validate()->save();
+        
+        return 'save success';
     }
     
     public function outline()

@@ -15,7 +15,9 @@
             <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer'}"><i class="mdui-icon material-icons">menu</i></a>
             <a class="mdui-typo-headline">{block name="title"}写作天下{/block}</a>
             <div class="mdui-toolbar-spacer"></div>
+            {block name="appbar-btn"}
             <a class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>
+            {/block}
             <a class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#appbar-menu'}"><i class="mdui-icon material-icons">more_vert</i></a>
             
             <!-- 右上角菜单 -->
@@ -27,11 +29,11 @@
                         <i class="mdui-menu-item-icon mdui-icon material-icons">person</i>登录
                     </a>
                 </li>
-                <li class="mdui-menu-item">
+                <!-- <li class="mdui-menu-item">
                     <a href="{:url('User/goRegister')}" class="mdui-ripple">
                         <i class="mdui-menu-item-icon mdui-icon material-icons">person_add</i>注册
                     </a>
-                </li>
+                </li> -->
                 {else /}
                 <li class="mdui-menu-item">
                     <a href="{:url('User/logOut')}" class="mdui-ripple">
@@ -106,3 +108,7 @@
     </div>
 
 </body>
+
+{block name="script"}
+
+{/block}
