@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         if (UserModel::logOut())
         {
-            return $this->success('退出成功', url('Index/index'));
+            return $this->success('退出成功', url('Index/rank'));
         }
         else
         {
