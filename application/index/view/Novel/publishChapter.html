@@ -1,6 +1,6 @@
 {extend name="frame" /}
 
-{block name="title"}{$chapter->title}{/block}
+{block name="title"}发布：{$chapter->title}{/block}
 
 {block name="appbar-btn"}
 <a onclick="save()" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">save</i></a>
@@ -8,10 +8,23 @@
 
 {block name="content" }
 
+<!-- 发布状态  -->
+<label class="mdui-checkbox" onclick="goPublish()">
+    <input type="checkbox" {eq name="$chapter->publish_state" value="1"}checked{/eq}/>
+    <i class="mdui-checkbox-icon"></i>
+    发布
+</label>
+
+<label class="mdui-checkbox" onclick="goLive()">
+    <input type="checkbox" {eq name="$chapter->live_publish" value="1"}checked{/eq}/>
+    <i class="mdui-checkbox-icon"></i>
+    实时发布
+</label>
+
 <!-- 标题 -->
 <div class="mdui-textfield mdui-textfield-floating-label">
     <label class="mdui-textfield-label">标题</label>
-    <input class="mdui-textfield-input" type="text" id="chapter-title" value="{$chapter->title}"/>
+    <input class="mdui-textfield-input" type="text" id="chapter-title" value="{$chapter->title}" />
 </div>
 
 <!-- 正文 -->
@@ -24,9 +37,8 @@
 
 {block name="script"}
 <script type="text/javascript">
-    function save()
-    {
-        var chapterID = {$chapter->chapterID};
+    function save() {
+        var chapterID = { $chapter-> chapterID };
         var url = '__URL__/saveChapter';
         var title = document.getElementById("chapter-title").value;
         var body = document.getElementById("chapter-body").value;
@@ -38,7 +50,7 @@
             title = noblank_name;
             document.getElementById("title").value = title;
         }
-        
+
         var XHR = null;
         if (window.XMLHttpRequest) {
             XHR = new XMLHttpRequest();
@@ -46,7 +58,7 @@
         else if (window.ActiveXObject) {
             XHR = new ActiveXObject("Microsoft.XMLHTTP");
         }
-        
+
         var FD = new FormData();
         FD.append('chapter_id', chapterID);
         FD.append("title", title);
@@ -54,13 +66,12 @@
 
         XHR.onreadystatechange = function () {
             if (XHR.readyState == 4) {
-                if (XHR.status == 200)
-                {
+                if (XHR.status == 200) {
                     mdui.snackbar({
                         message: '保存成功',
                         buttonText: '发布',
                         onButtonClick: function () {
-                            window.location.href = "{:url('Novel/goPublishChapter?chapter_id=' . $chapter->chapterID)}"
+                            window.location = "{:url('Novel/goPublishChapter?chapter_id=' . $chapter->chapterID)}"
                         },
                     });
 
@@ -77,11 +88,21 @@
                 }
             }
         }
-        
+
         XHR.open('POST', url, true);
         XHR.send(FD);
 
         return false;
+    }
+
+    function goPublish()
+    {
+        alert('发布');
+    }
+
+    function goLive()
+    {
+        alert('实时发布')
     }
 </script>
 {/block}

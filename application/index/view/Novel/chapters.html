@@ -19,13 +19,13 @@
 
         <div class="mdui-dialog" id="chapter-dialog-{$key}">
             <div class="mdui-dialog-content">
-                <div class="mdui-dialog-title">{$chapter->title}</div>
+                <div class="mdui-dialog-title">{$chapter->title}<font color='gray'>　　　　{:date("Y-m-d H:i:s", $chapter->sync_time)}</font></div>
                 {:preg_replace("/\\n/","<br />",urldecode($chapter->body))}
             </div>
             <div class="mdui-dialog-actions">
                 <a href="{:url('Novel/chapter?chapter_id=' . $chapter->chapterID)}"><button class="mdui-btn mdui-ripple">编辑</button></a>
-                <button class="mdui-btn mdui-ripple"><font color='gray'>发布</font></button>
-                <button class="mdui-btn mdui-ripple">删除</button>
+                <a href="{:url('Novel/goPublishChapter?chapter_id=' . $chapter->chapterID)}"><button class="mdui-btn mdui-ripple"><font color='blue'>发布</font></button></a>
+                <button class="mdui-btn mdui-ripple"><font color='gray'>删除</font></button>
             </div>
         </div>
     </li>
