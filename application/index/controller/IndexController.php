@@ -78,7 +78,7 @@ class IndexController extends Controller
                   ->order($sort);
         }
         
-        $users = $users->select();
+        $users = $users->paginate(30);
         $this->assign('users', $users);
         $this->assign('online_count', $online_count);
         return $this->fetch('rank');

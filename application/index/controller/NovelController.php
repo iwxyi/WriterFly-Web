@@ -47,6 +47,8 @@ class NovelController extends Controller
         $chapters = new ChapterModel();
         $chapters->where("userID='".session('user_id')."' and novelname='$novelname' and kind=0 and del=0");
         $chapters->order('sync_time desc');
+        $chapters = $chapters->select();
+        /* 章节排序 */
         return $this->fetch('dir');
     }
     
@@ -56,7 +58,7 @@ class NovelController extends Controller
         $chapters = new ChapterModel();
         $chapters->where("userID='".session('user_id')."' and novelname='$novelname' and kind=0 and del=0");
         $chapters->order('sync_time desc');
-        $chapters = $chapters->select();
+        $chapters = $chapters->paginate(20);
         
         $this->assign('novelname', $novelname);
         $this->assign('chapters', $chapters);
@@ -67,8 +69,27 @@ class NovelController extends Controller
     {
         $chapterID = Request::instance()->param('chapter_id');
         $chapter = ChapterModel::get(['chapterID' => $chapterID, 'userID' => session('user_id'), 'kind' => 0]);
+        if (is_null($chapterID))
+            return $this->error('没有这篇章节');
+        
         $this->assign('chapter', $chapter);
         return $this->fetch('chapter');
+    }
+    
+    public function publishedChapter()
+    {
+        $chapterID = Request::instance()->param('chapter_id');
+        $chapter = ChapterModel::get(['chapterID' => $chapterID, 'kind' => 0, 'del' => 0]);
+        if (is_null($chapterID))
+            return $this->error('没有这篇章节');
+        
+        $this->assign('chapter', $chapter);
+        return $this->fetch('publishedChapter');
+    }
+    
+    public function sc()
+    {
+        return $this->publishedChapter();
     }
     
     public function saveChapter()

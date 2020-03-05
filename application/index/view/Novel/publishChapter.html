@@ -3,26 +3,25 @@
 {block name="title"}发布：{$chapter->title}{/block}
 
 {block name="appbar-btn"}
-<a onclick="save()" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">save</i></a>
+<a onclick="save()" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '保存发布内容（不影响正文）'}"><i class="mdui-icon material-icons">save</i></a>
+<a onclick="copy()" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '复制分享网址'}"><i class="mdui-icon material-icons">content_copy</i></a>
 {/block}
 
 {block name="content" }
 
 <!-- 发布状态  -->
-<label class="mdui-checkbox">
+<label class="mdui-checkbox mdui-m-l-1" mdui-tooltip="{content: '是否设置其他人可见（广场中）'}">
     <input type="checkbox" ng-click="goPublish()" ng-checked="publish_state"/>
-    <i class="mdui-checkbox-icon"></i>
-    发布
+    <i class="mdui-checkbox-icon"></i>发布
 </label>
 
-<label class="mdui-checkbox" ng-show="publish_state==1">
+<label class="mdui-checkbox mdui-m-l-4" ng-show="publish_state==1" mdui-tooltip="{content: '修改章节内容后立即更新发布内容'}">
     <input type="checkbox" ng-click="goLive()" ng-checked="live_publish"/>
-    <i class="mdui-checkbox-icon"></i>
-    实时发布
+    <i class="mdui-checkbox-icon"></i>实时发布
 </label>
 
 <!-- 发布提示 -->
-<div class="mdui-chip">
+<div class="mdui-chip mdui-m-l-4">
     <span class="mdui-chip-title">发布页保存的不影响原文（除非再次发布）</span>
 </div>
 
@@ -127,5 +126,50 @@ $scope.goLive = function() {
 
         return false;
     }
+
+    function copy()
+    {
+        var url = "{:url('Novel/sc?chapter_id=' . $chapter->chapterID)}";
+        copyToClipboard(url);
+        mdui.snackbar({
+            message: '复制分享网址成功',
+            buttonText: '预览',
+            onButtonClick: function () {
+                window.location.href = url;
+            },
+        });
+    }
+
+    function copyToClipboard (text) {
+        if(text.indexOf('-') !== -1) {
+            let arr = text.split('-');
+            text = arr[0] + arr[1];
+        }
+        var textArea = document.createElement("textarea");
+        textArea.style.position = 'fixed';
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.padding = '0';
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? '成功复制到剪贴板' : '该浏览器不支持点击复制到剪贴板';
+        // alert(msg);
+        } catch (err) {
+            // alert('该浏览器不支持点击复制到剪贴板');
+        }
+
+        document.body.removeChild(textArea);
+    }
+
 </script>
 {/block}
