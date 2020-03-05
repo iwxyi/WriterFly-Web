@@ -1,0 +1,35 @@
+<html ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <title>测试</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/css/mdui.min.css">
+    <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/js/mdui.min.js"></script>
+    <script src="__STATIC__/angularjs/angular.js"></script>
+</head>
+
+<body ng-controller="ctrl">
+    <div class="container">
+        <h1 ng-class="{ 'btn-primary': temp }">{{name}}</h1>
+        <!-- 普通的单击方式 -->
+        <div class="btn btn-success" ng-click="name='李四'">修改姓名</div>
+        <!-- 使用function的单击方式 -->
+        <div class="btn btn-success" ng-click="change()">修改姓名2</div>
+    </div>
+</body>
+
+<script>
+    var myApp = angular.module('app', []);
+
+    myApp.controller('ctrl', ["$scope", function ($scope) {
+        $scope.name = "张三";
+
+        $scope.temp = false;
+        $scope.change = function () {
+            $scope.name = "王五";
+            $scope.temp = true;
+        };
+    }]);
+</script>
+</html>

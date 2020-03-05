@@ -7,6 +7,11 @@ use think\Request;
 
 class IndexController extends Controller
 {
+    public function test()
+    {
+        return $this->fetch('test');
+    }
+	
     public function index()
     {
         return $this->fetch('index');

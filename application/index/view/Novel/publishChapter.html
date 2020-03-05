@@ -3,19 +3,19 @@
 {block name="title"}发布：{$chapter->title}{/block}
 
 {block name="appbar-btn"}
-<a onclick="save()" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">save</i></a>
+<a onclick="savePublish()" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">save</i></a>
 {/block}
 
 {block name="content" }
 
 <!-- 发布状态  -->
-<label class="mdui-checkbox" onclick="goPublish()">
-    <input type="checkbox" {eq name="$chapter->publish_state" value="1"}checked{/eq}/>
+<label class="mdui-checkbox">
+    <input type="checkbox" value="Check" ng-click="goPublish()"/>
     <i class="mdui-checkbox-icon"></i>
     发布
 </label>
 
-<label class="mdui-checkbox" onclick="goLive()">
+<label class="mdui-checkbox" ng-show="publish_state==1" ng-click="goLive()">
     <input type="checkbox" {eq name="$chapter->live_publish" value="1"}checked{/eq}/>
     <i class="mdui-checkbox-icon"></i>
     实时发布
@@ -32,13 +32,40 @@
     <label class="mdui-textfield-label">正文</label>
     <textarea class="mdui-textfield-input" id="chapter-body">{:urldecode($chapter->body)}</textarea>
 </div>
+{/block}
 
+{block name="scope"}
+$scope.publish_state = {$chapter->publish_state};
+$scope.live_publish = {$chapter->live_publish};
+$scope.goPublish = function() {
+console.log('aaaa');
+    var link;
+    var rst = 0;
+    if ($scope.publish_state == 0)
+    {
+        link = "{:url('Novel/publishChapter?chapter_id=' . $chapter->chapterID)}";
+        rst = 1;
+    }
+    else if ($scope.publish_state == 1)
+    {
+        link = "{:url('Novel/unpublishChapter?chapter_id=' . $chapter->chapterID)}";
+        rst = 0;
+    }
+    else
+        return ;
+    $http.post(link).then(function(response){
+        alert('成功');
+        $scope.publish_state = rst;
+    }, function(response) {
+        alert('失败');
+    });
+}
 {/block}
 
 {block name="script"}
 <script type="text/javascript">
-    function save() {
-        var chapterID = { $chapter-> chapterID };
+    function savePublish() {
+        var chapterID = { $chapter->chapterID };
         var url = '__URL__/saveChapter';
         var title = document.getElementById("chapter-title").value;
         var body = document.getElementById("chapter-body").value;
@@ -95,14 +122,5 @@
         return false;
     }
 
-    function goPublish()
-    {
-        alert('发布');
-    }
-
-    function goLive()
-    {
-        alert('实时发布')
-    }
 </script>
 {/block}

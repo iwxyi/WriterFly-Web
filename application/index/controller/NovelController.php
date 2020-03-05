@@ -89,6 +89,24 @@ class NovelController extends Controller
         return 'save succeed';
     }
     
+    public function savePublish()
+    {
+        $param = Request::instance()->param();
+        $chapterID = $param['chapter_id'];
+        $title = $param['title'];
+        $body = $param['body'];
+        $chapter = ChapterModel::get(['chapterID' => $chapterID, 'userID' => session('user_id')]);
+        if (is_null($chapterID))
+            return $this->error('没有这篇章节');
+        
+        $chapter['publish_title'] = $title;
+        $chapter['publish_body'] = $body;
+        $chapter['publish_time'] = time();
+        $chapter->validate()->save();
+        
+        return 'save succeed';
+    }
+    
     public function goPublishChapter()
     {
         $param = Request::instance()->param();
@@ -119,9 +137,7 @@ class NovelController extends Controller
             return $this->error('没有这篇章节');
         
         if ($chapter['publish_state'] < 0) // 禁止
-        {
             return 'banned';
-        }
         
         $chapter['publish_state'] = 1;
         $chapter['publish_title'] = $chapter['title'];
