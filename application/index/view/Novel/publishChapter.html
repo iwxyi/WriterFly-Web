@@ -3,23 +3,28 @@
 {block name="title"}发布：{$chapter->title}{/block}
 
 {block name="appbar-btn"}
-<a onclick="savePublish()" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">save</i></a>
+<a onclick="save()" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">save</i></a>
 {/block}
 
 {block name="content" }
 
 <!-- 发布状态  -->
 <label class="mdui-checkbox">
-    <input type="checkbox" value="Check" ng-click="goPublish()"/>
+    <input type="checkbox" ng-click="goPublish()" ng-checked="publish_state"/>
     <i class="mdui-checkbox-icon"></i>
     发布
 </label>
 
-<label class="mdui-checkbox" ng-show="publish_state==1" ng-click="goLive()">
-    <input type="checkbox" {eq name="$chapter->live_publish" value="1"}checked{/eq}/>
+<label class="mdui-checkbox" ng-show="publish_state==1">
+    <input type="checkbox" ng-click="goLive()" ng-checked="live_publish"/>
     <i class="mdui-checkbox-icon"></i>
     实时发布
 </label>
+
+<!-- 发布提示 -->
+<div class="mdui-chip">
+    <span class="mdui-chip-title">发布页保存的不影响原文（除非再次发布）</span>
+</div>
 
 <!-- 标题 -->
 <div class="mdui-textfield mdui-textfield-floating-label">
@@ -38,34 +43,42 @@
 $scope.publish_state = {$chapter->publish_state};
 $scope.live_publish = {$chapter->live_publish};
 $scope.goPublish = function() {
-console.log('aaaa');
+    console.log('切换发布');
     var link;
-    var rst = 0;
     if ($scope.publish_state == 0)
-    {
         link = "{:url('Novel/publishChapter?chapter_id=' . $chapter->chapterID)}";
-        rst = 1;
-    }
     else if ($scope.publish_state == 1)
-    {
         link = "{:url('Novel/unpublishChapter?chapter_id=' . $chapter->chapterID)}";
-        rst = 0;
-    }
     else
         return ;
     $http.post(link).then(function(response){
-        alert('成功');
-        $scope.publish_state = rst;
+        $scope.publish_state = $scope.publish_state ? 0 : 1;
+        console.log('切换发布成功', $scope.publish_state);
     }, function(response) {
-        alert('失败');
+        console.log('切换发布失败');
     });
-}
+};
+$scope.goLive = function() {
+    console.log('切换实时发布');
+    var link = "{:url('Novel/livePublish?chapter_id=' . $chapter->chapterID)}";
+    $http.post(link).then(function(response){
+        $scope.live_publish = $scope.live_publish ? 0 : 1;
+        console.log(response);
+        if (response.status == 200)
+        {
+            console.log('切换实时发布成功', $scope.live_publish);
+        }
+    }, function(response) {
+        console.log('切换实时发布失败');
+    });
+};
 {/block}
 
 {block name="script"}
 <script type="text/javascript">
-    function savePublish() {
-        var chapterID = { $chapter->chapterID };
+    function save()
+    {
+        var chapterID = {$chapter->chapterID};
         var url = '__URL__/saveChapter';
         var title = document.getElementById("chapter-title").value;
         var body = document.getElementById("chapter-body").value;
@@ -77,7 +90,7 @@ console.log('aaaa');
             title = noblank_name;
             document.getElementById("title").value = title;
         }
-
+        
         var XHR = null;
         if (window.XMLHttpRequest) {
             XHR = new XMLHttpRequest();
@@ -85,7 +98,7 @@ console.log('aaaa');
         else if (window.ActiveXObject) {
             XHR = new ActiveXObject("Microsoft.XMLHTTP");
         }
-
+        
         var FD = new FormData();
         FD.append('chapter_id', chapterID);
         FD.append("title", title);
@@ -93,13 +106,10 @@ console.log('aaaa');
 
         XHR.onreadystatechange = function () {
             if (XHR.readyState == 4) {
-                if (XHR.status == 200) {
+                if (XHR.status == 200)
+                {
                     mdui.snackbar({
                         message: '保存成功',
-                        buttonText: '发布',
-                        onButtonClick: function () {
-                            window.location = "{:url('Novel/goPublishChapter?chapter_id=' . $chapter->chapterID)}"
-                        },
                     });
 
                     save_time = (new Date()).getTime();
@@ -107,20 +117,15 @@ console.log('aaaa');
                 } else {
                     mdui.snackbar({
                         message: '保存失败' + XHR.status,
-                        buttonText: '使用客户端',
-                        onButtonClick: function () {
-                            console.log(XHR.responseText);
-                        },
                     });
                 }
             }
         }
-
+        
         XHR.open('POST', url, true);
         XHR.send(FD);
 
         return false;
     }
-
 </script>
 {/block}

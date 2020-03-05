@@ -89,7 +89,7 @@ class NovelController extends Controller
         return 'save succeed';
     }
     
-    public function savePublish()
+    public function savePublishChapter()
     {
         $param = Request::instance()->param();
         $chapterID = $param['chapter_id'];
@@ -169,7 +169,7 @@ class NovelController extends Controller
     {
         $param = Request::instance()->param();
         $chapterID = $param['chapter_id'];
-        $chapter = ChapterModel::get(['chapterID' => $chapterID, 'user_id' => session('user_id')]);
+        $chapter = ChapterModel::get(['chapterID' => $chapterID, 'userID' => session('user_id')]);
         if (is_null($chapterID))
             return $this->error('没有这篇章节');
         
