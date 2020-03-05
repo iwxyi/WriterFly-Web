@@ -1,0 +1,34 @@
+{extend name="frame" /}
+
+{block name="title"}分享广场{/block}
+
+{block name="content" }
+
+<div class="mdui-panel mdui-panel-popout" mdui-panel>
+    {volist name="chapters" id="chapter" key="key"}
+
+    <div class="mdui-panel-item">
+        <div class="mdui-panel-item-header">
+            <div class="mdui-panel-item-title">
+                <div class="mdui-chip">
+                    <span class="mdui-chip-icon">{:mb_substr($chapter->getUser()->getName(),0,1)}</span>
+                    <span class="mdui-chip-title">{$chapter->title}</span>
+                </div>
+            </div>
+            <div class="mdui-panel-item-summary">
+                <font colot='gray'>{:mb_strlen(preg_replace("/[\s　]/","",urldecode($chapter->body)))}字</font>
+            </div>
+            <div class="mdui-panel-item-summary">
+                <font colot='gray'>{:date("m-d H:i:s", $chapter->sync_time)}</font>
+            </div>
+            <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <div class="mdui-panel-item-body">
+            {:preg_replace("/\\n/","<br />",urldecode($chapter->body))}
+        </div>
+    </div>
+
+    {/volist}
+</div>
+
+{/block}

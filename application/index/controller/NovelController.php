@@ -84,6 +84,13 @@ class NovelController extends Controller
         $chapter['title'] = $title;
         $chapter['body'] = $body;
         $chapter['alter_time'] = $chapter['sync_time'] = time();
+        
+        if ($chapter['live_publish'])
+        {
+            $chapter['publish_title'] = $title;
+            $chapter['publish_body'] = $body;
+        }
+        
         $chapter->validate()->save();
         
         return 'save succeed';
@@ -182,6 +189,33 @@ class NovelController extends Controller
         }
         $chapter->validate()->save();
         return 'succeed';
+    }
+    
+    public function publishedChapters()
+    {
+        $chapters = new ChapterModel();
+        $chapters->where("kind=0 and publish_state=1 and del=0");
+        $chapters->order('publish_time desc');
+        $chapters = $chapters->select();
+        
+        $this->assign('chapters', $chapters);
+        return $this->fetch('publishedChapters');
+    }
+    
+    public function myPublishList()
+    {
+        $chapters = new ChapterModel();
+        $chapters->where("userID='".session('user_id')."' and kind=0 and publish_state=1 and del=0");
+        $chapters->order('publish_time desc');
+        $chapters = $chapters->select();
+        
+        $this->assign('chapters', $chapters);
+        return $this->fetch('publishedChaptera');
+    }
+    
+    public function publishedNovels()
+    {
+        
     }
     
     public function outline()

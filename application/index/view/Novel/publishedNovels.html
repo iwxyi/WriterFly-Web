@@ -15,8 +15,11 @@
         </div>
         <div class="mdui-panel-item-body">
             <div class="mdui-panel-item-actions">
-                <a href="{:url('Novel/chapters?novelname=' . $novel->name)}"><button class="mdui-btn mdui-ripple">目录</button></a>
-                <button class="mdui-btn mdui-ripple" mdui-dialog="{target: '#delete-dialog-{$key}'}"><font color='gray'>删除</font></button>
+                <a href="{:url('Novel/chapters?novelname=' . $novel->name)}"><button
+                        class="mdui-btn mdui-ripple">目录</button></a>
+                <button class="mdui-btn mdui-ripple" mdui-dialog="{target: '#delete-dialog-{$key}'}">
+                    <font color='gray'>删除</font>
+                </button>
             </div>
         </div>
     </div>
