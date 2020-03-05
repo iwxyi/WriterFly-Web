@@ -24,6 +24,9 @@
 
 {block name="script"}
 <script type="text/javascript">
+    var inst = new mdui.Drawer('#left-drawer');
+    inst.close();
+
     function save()
     {
         var chapterID = {$chapter->chapterID};

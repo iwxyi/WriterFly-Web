@@ -60,7 +60,7 @@ class IndexController extends Controller
         if ($type != 'room' && $type != 'myroom')
         {
             $online_count = count($users->where("sync_time >= '$online_time'")->select());
-            $users->where("allwords>allwords_yestoday or words_yestoday>0 or VIP_deadline>0 or sync_time>$time")
+            $users->where("allwords>allwords_yestoday or words_yestoday>0 or VIP_deadline>0 or sync_time>$online_time")
                   ->order($sort);
         }
         else if ($type == 'myroom')

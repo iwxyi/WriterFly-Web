@@ -217,7 +217,7 @@ class NovelController extends Controller
         $chapters = new ChapterModel();
         $chapters->where("kind=0 and publish_state=1 and del=0");
         $chapters->order('publish_time desc');
-        $chapters = $chapters->select();
+        $chapters = $chapters->paginate(20);
         
         $this->assign('chapters', $chapters);
         return $this->fetch('publishedChapters');

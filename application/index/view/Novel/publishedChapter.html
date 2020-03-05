@@ -11,13 +11,16 @@
 
 <!-- 正文 -->
 <div class="mdui-textfield mdui-textfield-floating-label">
-    <textarea class="mdui-textfield-input" id="chapter-body" disabled >{:urldecode($chapter->body)}</textarea>
+    <div class="mdui-typo">{:preg_replace("/\\n/","<br />",urldecode($chapter->body))}</div>
 </div>
 
 {/block}
 
 {block name="script"}
 <script type="text/javascript">
+    var inst = new mdui.Drawer('#left-drawer');
+    inst.close();
+
     function save()
     {
         var chapterID = {$chapter->chapterID};

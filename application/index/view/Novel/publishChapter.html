@@ -75,6 +75,9 @@ $scope.goLive = function() {
 
 {block name="script"}
 <script type="text/javascript">
+    var inst = new mdui.Drawer('#left-drawer');
+    inst.close();
+
     function save()
     {
         var chapterID = {$chapter->chapterID};
@@ -135,7 +138,7 @@ $scope.goLive = function() {
             message: '复制分享网址成功',
             buttonText: '预览',
             onButtonClick: function () {
-                window.location.href = url;
+                window.open(url);
             },
         });
     }
