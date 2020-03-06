@@ -36,11 +36,11 @@ class IndexController extends Controller
         if (is_null($type) || $type == 'level')
         {
             $type = 'level';
-            $sort = 'level desc';
+            $sort = 'level desc, allwords desc, words_yestoday desc';
         }
         else if ($type == 'yestoday')
         {
-            $sort = 'words_yestoday desc';
+            $sort = 'words_yestoday desc, level desc, allwords desc';
             $this->assign('rank_name', '昨日风云榜');
         }
         else if ($type == 'today')
@@ -49,11 +49,11 @@ class IndexController extends Controller
             $this->assign('rank_name', '今日风云榜');
         }
         else if ($type == 'room' || $type == 'myroom')
-            $sort = 'level DESC';
+            $sort = 'level DESC, allwords desc, words_yestoday desc';
         else
         {
             $type = 'level';
-            $sort = 'level desc';
+            $sort = 'level desc, allwords desc, words_yestoday desc';
         }
 
         $users = new UserModel();
@@ -61,7 +61,7 @@ class IndexController extends Controller
         if ($type != 'room' && $type != 'myroom')
         {
             $online_count = count($users->where("sync_time >= '$online_time'")->select());
-            $users->where("allwords>allwords_yestoday or words_yestoday>0 or VIP_deadline>0 or sync_time>$online_time")
+            $users/*->where("allwords>allwords_yestoday or words_yestoday>0 or VIP_deadline>0 or sync_time>$online_time")*/
                   ->order($sort);
         }
         else if ($type == 'myroom')
@@ -79,7 +79,7 @@ class IndexController extends Controller
                   ->order($sort);
         }
         
-        $users = $users->paginate(30);
+        $users = $users->paginate(50);
         $this->assign('users', $users);
         $this->assign('online_count', $online_count);
         return $this->fetch('rank');

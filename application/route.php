@@ -9,7 +9,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-return [
+/* return [
     '__pattern__' => [
         'name' => '\w+',
     ],
@@ -17,5 +17,11 @@ return [
         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
         ':name' => ['index/hello', ['method' => 'post']],
     ],
-
-];
+]; */
+use think\Route;
+Route::rule('download','index/index/download');
+Route::rule('d','index/index/download');
+Route::rule('rank','index/index/rank');
+Route::rule('r','index/index/rank');
+Route::rule('share','index/novel/publishedChapters');
+Route::rule('s','index/novel/publishedChapters');
