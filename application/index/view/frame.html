@@ -18,7 +18,11 @@
             <a class="mdui-typo-headline">{block name="title"}写作天下{/block}</a>
             <div class="mdui-toolbar-spacer"></div>
             {block name="appbar-btn"}
-            <a class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>
+            <div class="mdui-textfield mdui-textfield-expandable mdui-float-right">
+                <button class="mdui-textfield-icon mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></button>
+                <input class="mdui-textfield-input" type="text" placeholder="Search" ng-model="searchKey" ng-keyup="searchKeyUp($event)" />
+                <button class="mdui-textfield-close mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">close</i></button>
+            </div>
             {/block}
             <a class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#appbar-menu'}"><i class="mdui-icon material-icons">more_vert</i></a>
             
@@ -114,9 +118,15 @@
     var myApp = angular.module('app', []);
 
     myApp.controller("ctrl", ["$scope", '$http', function ($scope, $http) {
-        $scope.goPublish = function () {
-            alert('111');
-        }
+        $scope.searchKey = '';
+        $scope.searchKeyUp = function(e) {
+            console.log('按键弹起');
+            var keyCode = window.event ? e.keyCode : e.which;
+            if (keyCode == 13) { // 回车键
+                var url = "{:url('Index/search')}" + '?key=' + $scope.searchKey;
+                window.location.href=url;
+            }
+        };
         {block name="scope"}
 
         {/block}

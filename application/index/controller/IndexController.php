@@ -85,6 +85,22 @@ class IndexController extends Controller
         return $this->fetch('rank');
     }
     
+    public function search()
+    {
+        $key = Request::instance()->param('key');
+        if (is_null($key) || $key == '')
+            return $this->fetch('index');
+        
+        $users = new UserModel();
+        $users->where("locate('$key', username) or locate('$key', nickname)")->order('level desc, allwords desc');
+        $users = $users->paginate(50);
+        $this->assign('users', $users);
+        $this->assign('searchKey', $key);
+        $this->assign('time', time());
+        $this->assign('online_time', time() - 900);
+        return $this->fetch('search');
+    }
+    
     public function rooms()
     {
         $rooms = new RoomModel();
