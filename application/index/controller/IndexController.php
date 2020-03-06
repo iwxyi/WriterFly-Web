@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use app\common\model\UserModel;
 use app\common\model\RoomModel;
+use app\common\model\DownloadModel;
 use think\Controller;
 use think\Request;
 
@@ -92,5 +93,24 @@ class IndexController extends Controller
         
         $this->assign('rooms', $rooms);
         return $this->fetch('rooms');
+    }
+    
+    public function download()
+    {
+        $d = Request::instance()->param('d');
+        $this->assign('d', $d);
+        $dc = DownloadModel::getCount();
+        $this->assign('dc', $dc);
+        return $this->fetch('download');
+    }
+    
+    public function downloadPP()
+    {
+        $platform = Request::instance()->param('platform');
+        $download = new DownloadModel();
+        $download['time'] = time();
+        $download['platform'] = $platform;
+        $download->save();
+        return DownloadModel::getCount();
     }
 }

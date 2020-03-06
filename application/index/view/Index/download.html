@@ -1,0 +1,192 @@
+{extend name="frame" /}
+
+<title>{block name="title"}写作天下 下载{/block}</title>
+
+{block name="content" }
+
+<div class="mdui-typo">
+    <div class="mdui-typo-display-2">写作天下{eq name="$d" value="mzfy"}<font color='gray'>(码字风云电脑版)</font>{/eq}</div>
+    <div class="mdui-typo-title mdui-m-t-2 mdui-m-b-2">带着愉悦的心情创作，执云作笔，诉尽平生意。</div>
+    <blockquote>
+        <p>集简约 UI 与人性化 AI 于一体的码字工具，无论是小说、作文、日记、报告，都能轻松驾驭。</p>
+        <footer><a href="https://shang.qq.com/wpa/qunwpa?idkey=ded2b6cd5a973b026afc58d46b17ef1abd611ce82454053ffb5f510105b01f3b" target="_blank">QQ交流群：705849222</a></footer>
+    </blockquote>
+
+    {eq name="$d" value="mzfy"}
+    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="__STATIC__/package/码字风云.apk" ng-click="addDownload('mzfy');">码字风云 本地下载</a>
+    {/eq}
+    <span>　　</span>
+    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="__STATIC__/package/写作天下-Windows.zip" ng-click="addDownload('Windows');">Windows 下载</a>
+    <span>　　</span>
+    <select class="mdui-select" mdui-select ng-model="download" id="mored">
+        <option>Linux 内测</option>
+        <option>Windows 内测</option>
+        <option>码字风云 下载</option>
+        <option>Android-v7a 内测</option>
+        <option>Android-x86 内测</option>
+        <option disabled>Mac 未开放</option>
+        <option disabled>iOS 未开放</option>
+        <!-- <option>百度网盘(历史版本)</option> -->
+        <option disabled>更多平台敬请期待</option>
+    </select>
+    <span>　　</span>
+    <div class="mdui-chip">
+        <span class="mdui-chip-title">下载次数：{{downloadCount}} 次</span>
+    </div>
+
+    <video class="mdui-video-fluid mdui-m-a-5" controls>
+        <source src="__STATIC__/video/rumen.mp4" type="video/mp4">
+    </video>
+    
+
+    <hr />
+    
+    <div class="mdui-typo-display-1">功能</div>
+    <ol>
+        <li><strong>自由的目录</strong>：自动序号，拖拽排序，随意调整</li>
+        <li><strong>自定义界面</strong>：全局自定义主题、风格，可使用CSS代码</li>
+        <li><strong>智能标点系统</strong>：独有的强大又省力的标点 AI</li>
+        <ol>
+            <li><strong>智能引号</strong>：增删移动全在一键之间</li>
+            <li><strong>智能空格</strong>：缩进、标点、移动光标融为一体</li>
+            <li><strong>智能回车</strong>：双引号内回车、自动添加句末标点、自动缩进</li>
+            <li><strong>自动标点</strong>：语气词后面自动加上标点符号</li>
+        </ol>
+        <li><strong>名片库系统</strong>：为文中所有人物、事物创建名片</li>
+        <ol>
+            <li><strong>名字高亮</strong>，直观高效</li>
+            <li><strong>鼠标悬浮</strong>：随时查看简介与详情</li>
+            <li><strong>章节出现</strong>的名片一览</li>
+            <li><strong>快速搜索</strong>所有名片</li>
+        </ol>
+        <li><strong>云端同步</strong>：稳定、全自动，多一重保险。支持同步到手机。</li>
+        <li><strong>云排行榜</strong>：所有用户在线拼字</li>
+        <li><strong>多线大纲</strong>：主线/辅线/事件线/感情线…等</li>
+        <li><strong>语言高亮</strong>：人物语言描写高亮显示</li>
+        <li><strong>章内标注</strong>：章节内埋坑备注，可作细纲，导出、发布时自动去除</li>
+        <li><strong>高潮模式</strong>：自动识别当前情节激烈程度，微调小说AI</li>
+        <li><strong>导入导出</strong>：花样自定义格式，便捷的多文件拖拽导入导出</li>
+        <li><strong>字数统计</strong>：精确到几个空格的数量</li>
+        <li><strong>同音词覆盖</strong>：选词错误，无需删除，直接覆盖旧内容</li>
+        <li><strong>敏感词检测</strong>：高亮所有敏感词，可自定义词库</li>
+        <li><strong>多功能替换</strong>：简繁转换、敏感词替换、敏感词转拼音等</li>
+        <li><strong>自动分段</strong>：换行/排版时，过长段落自动在合适的地方分段</li>
+        <li><strong>词语提示</strong>：输入时自动提示同义词、相关词、常用句</li>
+        <li><strong>随机取名</strong>：最轻便的取名方式，要啥来啥</li>
+        <li><strong>一键排版</strong>：全自动，包括英文空格、首字母大写、长段落自动分段等</li>
+        <li><strong>资源搜索</strong>：全局浏览所有资源文件，快速搜索</li>
+        <li><strong>小黑屋</strong>：多种模式强制码字</li>
+        <li><strong>剪贴板</strong>：保存所有复制的历史记录</li>
+        <li><strong>回收板</strong>：记录所有删除/剪切的长文本，避免丢失</li>
+        <li><strong>小说类型</strong>：只需小说名便可判断小说是什么类型</li>
+        <li><strong>输入动画</strong>：文字平滑输入、光标平滑移动</li>
+        <li><strong>微动背景</strong>：在不影响注意力的情况下，微调背景颜色</li>
+        <li><strong>情绪滤镜</strong>：智能分析人物情绪，添加相应背景滤镜</li>
+        <li><strong>场景图片</strong>：识别故事环境，设置对应的背景图片</li>
+        <li><strong>错词替换</strong>：错别字高亮和一键替换</li>
+        <li><strong>汉语词典</strong>：内置完整词典，显示所有释义，附加成语接龙功能</li>
+        <li><strong>主题管理</strong>：强大的主题功能，切换色彩、词库、CSS样式、动态背景</li>
+        <li><strong>回收站</strong>：多种类型的回收站，强力后悔药</li>
+        <li><strong>章节快照</strong>：自动备份章节编辑历史，确保内容万无一失</li>
+    </ol>
+
+    <div class="mdui-typo-display-1">以用户为本的小细节</div>
+    <p>《写作天下》是一款真正以用户为本的应用，功能强大的同时上手容易，几乎无难度。</p>
+    <p>以下这些或许难以察觉的小设计更是打造了极度良好的用户体验：</p>
+    <ol>
+        <li><strong>创建新书名字</strong>：分析用户之前的各种操作，获取可能取名的名字</li>
+        <li><strong>自动章节序号</strong>：中间临时插入章节、随意排序，而无需修改后面全部序号</li>
+        <li><strong>目录整十对齐</strong>：使目录中文序号的排列整齐，避免长度差导致的错落</li>
+        <li><strong>还原光标位置</strong>：调整窗口大小、修改字体大小后，光标仍在窗口同比例位置</li>
+        <li><strong>排版输入位置</strong>：输入聚焦在原来的位置不变，甚至连滚动进度也一样</li>
+        <li><strong>恢复编辑位置</strong>：重启程序，滚动位置、光标位置、甚至连选中的内容都恢复原态</li>
+        <li><strong>独特动态界面</strong>：可视控件全部重写，哪怕是一个小小的按钮都如此与众不同</li>
+        <li><strong>智能引号细节</strong>：第二句人物描写的双引号前缀为逗号，而非冒号</li>
+        <li><strong>动态波浪动画</strong>：没有打开作品时为不显得空洞，播放动画</li>
+        <li><strong>趣味交互按钮</strong>：各种线条律动、缩放特效，活灵活现</li>
+        <li><strong>小说类型判断</strong>：输入书名，自动分析作品类型，无需手选~</li>
+        <li><strong>多段落后引号</strong>：智能回车仅最后一段有后引号，语法准确</li>
+        <li><strong>小黑屋可逃离</strong>：当检测到用户无法完成小黑屋时，提供逃离方式（临时有效）</li>
+        <li><strong>点不到的按钮</strong>：会跑的“强制退出”按钮！点到算你手快</li>
+        <li><strong>长段落自动分段</strong>：不拆分语言描写，并且尽量每段字数接近</li>
+        <li><strong>小黑屋字数预测</strong>：根据使用习惯，猜测几个可能的数字</li>
+        <li><strong>自动打字机模式</strong>：在末尾码字时自动开启打字机模式</li>
+        <li>针对高端用户，<strong>自定义所有</strong>词库、界面CSS代码、菜单格式、配置INI文件等</li>
+        <li>窗口一体化，可隐藏不需要的控件，通过搜索面板直接<strong>输入指令并执行</strong></li>
+        <li>其他彩蛋，比如夜间码字温馨鼓励语、成语接龙</li>
+    </ol>
+</div>
+
+<!-- 浮动按钮 -->
+<button class="mdui-fab mdui-fab-fixed mdui-ripple"><i class="mdui-icon material-icons">arrow_downward</i></button>
+
+{/block}
+
+{block name="scope"}
+$scope.downloadCount={$dc};
+$scope.download=0;
+$scope.downloads = [
+    {id:1, key:'Linux 内测', file:'写作天下Beta-Linux.zip'},
+    {id:2, key:'Windows 内测', file:'写作天下Beta-Linux.zip'},
+    {id:3, key:'Mac 暂未开放', file:''},
+    {id:4, key:'码字风云 下载', file:'码字风云.zpk'},
+    {id:5, key:'Android-v7a 内测', file:'写作天下Beta-Android-v7a.apk'},
+    {id:6, key:'Android-x86 内测', file:'写作天下Beta-Android-x86.apk'},
+    {id:7, key:'iOS 暂未开发', file:''},
+    {id:8, key:'网盘(历史版本) 下载', file:'', url:''},
+    {id:9, key:'更多平台敬请期待', file:'', url:''},
+];
+
+$scope.$watch('download', function(newVal, oldVal, scope){
+    /* 检测到 user 值发生变化时 */
+    var dir="__STATIC__/package/";
+    switch (newVal) {
+    case 'Windows 内测':
+        window.location.href=dir+"写作天下Beta-Windows.zip";
+        $scope.addDownload('Windows');
+        break;
+    case 'Linux 内测':
+        window.location.href=dir+"写作天下Beta-Linux.zip";
+        $scope.addDownload('Linux');
+        break;
+    case 'Mac 内测':
+        window.location.href=dir+"写作天下Beta-Mac.zip";
+        $scope.addDownload('Mac');
+        break;
+    case '码字风云 下载':
+        window.location.href=dir+"码字风云.apk";
+        $scope.addDownload('mzfy')
+        break;
+    case 'Android-v7a 内测':
+        window.location.href=dir+"写作天下Beta-Android-v7a.apk";
+        $scope.addDownload('Android-v7a');
+        break;
+    case 'Android-x86 内测':
+        window.location.href=dir+"写作天下Beta-Android-x86.apk";
+        $scope.addDownload('Android-x86');
+        break;
+    case 'Windows 内测':
+        window.location.href=dir+"写作天下Beta-Windows.zip";
+        $scope.addDownload('Windows');
+        break;
+    case '百度网盘(历史版本)':
+        window.location.href="https://pan.baidu.com/s/1sYUP4dVek7oQcLOilQo4TA#list/path=%2F%E5%86%99%E4%BD%9C%E5%A4%A9%E4%B8%8B";
+        $scope.addDownload('Pan');
+        break;
+    }
+});
+
+$scope.addDownload = function(pack) {
+    var url = "{:url('downloadPP')}";
+    console.log('addDownload:' + pack);
+    $http.post(url + '?platform=' + pack).then(function(response){ if (response.status == 200) { $scope.downloadCount++; } }, function(response){});
+}
+
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    var inst = new mdui.Drawer('#left-drawer');
+    inst.close();
+</script>
+{/block}
