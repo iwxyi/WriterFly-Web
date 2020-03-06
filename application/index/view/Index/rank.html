@@ -34,7 +34,10 @@
         {gt name="user.VIP_deadline" value="$time"}<font color='red'>[VIP]</font>{/gt}</td>
     {else /}
         <td>{$user->getData('username')}
-            {gt name="user.VIP_deadline" value="$time"}<font color='red'> [VIP]</font>{/gt}</td>
+            {gt name="user.VIP_deadline" value="$time"}<font color='red'> [VIP] </font>{/gt}
+            {eq name="user.system_windows" value="1"}<img src="__STATIC__/view/img/windows.png" title="使用PC端">{/eq}
+            {eq name="user.system_android" value="1"}<img src="__STATIC__/view/img/android.png" title="使用Android端">{/eq}
+        </td>
     {/gt}
 
     <td>{$user->getData('level')}</td>
