@@ -53,9 +53,9 @@
 </div>
 
 <!-- 我的接力 -->
-{neq name="$muse->userID" value="$Think.session.user_idaaaaaaaaaaaaaaaaaaaaaaaaa"}
+{neq name="$current->userID" value="$Think.session.user_idaaaaaaaaaaaaaaaaaaaaaaaaa"}
 <form method="post" action="{:url('Muse/relay')}">
-    <input type="hidden" name="muse_id" value="{$muse->museID}" />
+    <input type="hidden" name="muse_id" value="{$current->museID}" />
     <div class="mdui-textfield">
         <label class="mdui-textfield-label">接力该情节线(30-300字)</label>
         <textarea class="mdui-textfield-input" name="content" maxlength="300"

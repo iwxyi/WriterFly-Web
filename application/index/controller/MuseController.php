@@ -76,7 +76,7 @@ class MuseController extends Controller
         $muse['relay_time'] = $muse['create_time'] = time();
         $muse->validate()->save();
         
-        $muse['path'] = '/' . $muse['museID'] . '/';
+        $muse['path'] = $muse['museID'];
         $muse->validate()->save();
         return $this->success('创建情节成功', url('Muse/latest'));
     }
@@ -97,10 +97,11 @@ class MuseController extends Controller
         
         // 获取时间。在包含这个ID的情况下，比这个早的都是父情节，晚的都是子情节
         $create_time = strtotime($muse->create_time);
+        $path = $muse->path;
         
         // 获取父情节：create早
         $parents = new MuseModel();
-        $parents->where("locate('$museID', path) and create_time<='$create_time'")->order('create_time');
+        $parents->where("find_in_set(museID, '$path') and create_time<='$create_time'")->order('create_time');
         $parents = $parents->select();
         
         // 获取子情节：create晚
@@ -109,6 +110,7 @@ class MuseController extends Controller
         $children = $children->select();
         
         $this->assign('parents', $parents);
+        $this->assign('current', $muse);
         $this->assign('children', $children);
         return $this->fetch('line');
     }
@@ -156,7 +158,7 @@ class MuseController extends Controller
         $muse['relay_time'] = $muse['create_time'] = time();
         $muse->validate()->save();
         
-        $muse['path'] = $parent['path'] . $muse['museID'] . '/';
+        $muse['path'] = $parent['path'] . ',' . $muse['museID'];
         $muse->validate()->save();
         
         $parent['children_count'] = $parent['children_count'] + 1;
