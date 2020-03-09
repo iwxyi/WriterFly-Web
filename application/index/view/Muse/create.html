@@ -1,0 +1,38 @@
+{extend name="frame" /}
+
+{block name="title"}思绪深渊{/block}
+
+{block name="appbar-btn"}
+
+{/block}
+
+{block name="content" }
+
+<div class="mdui-panel" mdui-panel>
+    <div class="mdui-panel-item mdui-panel-item-open">
+        <div class="mdui-panel-item-header">规则说明</div>
+        <div class="mdui-panel-item-body">
+            <p>1、任何人都能创建一个情节开头</p>
+            <p>2、任何人都能在某情节后面接力</p>
+            <p>3、同一人不可再接力自己的情节</p>
+            <p>4、清理连续三天没有接力的情节</p>
+        </div>
+    </div>
+
+    {eq name=":isset($hasError)" value="true"}
+        <div class="mdui-panel-item">
+            <div class="mdui-panel-item-header">{$errorReason}</div>
+        </div>
+    {/eq}
+</div>
+
+<form method="post" action="{:url('Muse/create')}">
+    <div class="mdui-textfield">
+        <label class="mdui-textfield-label">创建新的剧情(30-300字)</label>
+        <textarea class="mdui-textfield-input" name="content" maxlength="300" minlength="30">{:isset($default) ? $default : ""}</textarea>
+    </div>
+
+    <input type="submit" value="创建" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" />
+</form>
+
+{/block}

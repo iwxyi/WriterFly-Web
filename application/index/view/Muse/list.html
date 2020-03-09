@@ -1,0 +1,50 @@
+{extend name="frame" /}
+
+{block name="title"}思绪深渊{/block}
+
+{block name="appbar-btn"}
+<a href="{:url('Muse/goCreate')}"><i class="mdui-icon material-icons">add</i></a>
+{/block}
+
+{block name="content" }
+
+<div class="mdui-panel" mdui-panel>
+
+    {volist name="muses" id="muse" key="key"}
+    <div class="mdui-panel-item mdui-panel-item-open">
+        <div class="mdui-panel-item-header">
+            <div class="mdui-panel-item-title">{$muse->getUserName()}</div>
+            <div class="mdui-panel-item-summary">{$muse->create_time}</div>
+            <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+        </div>
+        <div class="mdui-panel-item-body">
+            {:preg_replace("/\\n/","<br />",urldecode($muse->content))}
+            <div class="mdui-panel-item-actions">
+                <a href="{:url('Muse/line?muse_id=' . $muse->museID)}"><button
+                        class="mdui-btn mdui-ripple">完整情节</button></a>
+                <button class="mdui-btn mdui-ripple" mdui-dialog="{target: '#report-dialog-{$key}'}">
+                    <font color='gray'>举报</font>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mdui-dialog" id="report-dialog-{$key}">
+        <div class="mdui-dialog-title">提示</div>
+        <div class="mdui-dialog-content">是否向开发者举报该剧情？</div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>
+                <font color='red'>举报</font>
+            </button>
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>
+                <font color='green'>取消</font>
+            </button>
+        </div>
+    </div>
+
+    {/volist}
+
+    <div class="mdui-center">{$muses->render()}</div>
+</div>
+
+{/block}
