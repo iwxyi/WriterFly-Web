@@ -174,7 +174,18 @@ class MuseController extends Controller
      */
     public function mine()
     {
+        $userID = session('user_id');
         
+        // $mineAfters = MuseModel::get(['userID' => $userID]);
+        $mines = new MuseModel();
+        $mines->where("userID = '$userID'")->order('create_time desc');
+        $mineAfters = $mines->select();
+        
+        
+        
+        $this->assign('mineAfters', $mineAfters);
+        $this->assign('afterMines', []);
+        return $this->fetch('mine');
     }
     
     /**

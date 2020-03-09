@@ -10,7 +10,7 @@
 
 <!-- 父情节（与当前） -->
 <div class="mdui-textfield">
-    <input class="mdui-textfield-input" type="text" disabled placeholder="完整情节线" />
+    <input class="mdui-textfield-input" type="text" disabled placeholder="完整情节线 >>>" />
 </div>
 <div class="mdui-panel" mdui-panel>
 
@@ -19,7 +19,7 @@
         <div class="mdui-panel-item-header">
             <div class="mdui-panel-item-title">{$muse->getUserName()}</div>
             <div class="mdui-panel-item-summary">{$muse->create_time}</div>
-            <div class="mdui-panel-item-summary">{$key}层</div>
+            <div class="mdui-panel-item-summary">{$muse->floor}层</div>
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
         </div>
         <div class="mdui-panel-item-body">
@@ -70,7 +70,7 @@
 
 <!-- 子情节 -->
 <div class="mdui-textfield">
-    <input class="mdui-textfield-input" type="text" disabled placeholder="子情节接力" />
+    <input class="mdui-textfield-input" type="text" disabled placeholder="子情节接力 >>>" />
 </div>
 <div class="mdui-panel" mdui-panel>
 
@@ -88,9 +88,9 @@
                         class="mdui-btn mdui-ripple">接力</button></a> -->
                 <a href="{:url('Muse/line?muse_id=' . $muse->museID)}"><button
                         class="mdui-btn mdui-ripple">查看与接力</button></a>
-                <a href="{:url('Muse/report?muse_id=' . $muse->museID)}" class="mdui-btn mdui-ripple">
-                    <font color='red'>举报</font>
-                </a>
+                <button class="mdui-btn mdui-ripple" mdui-dialog="{target: '#report-dialog-{$key}'}">
+                    <font color='gray'>举报</font>
+                </button>
             </div>
         </div>
     </div>

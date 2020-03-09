@@ -1,0 +1,64 @@
+{extend name="frame" /}
+
+{block name="title"}思绪深渊{/block}
+
+{block name="appbar-btn"}
+<a href="{:url('Muse/goCreate')}"><i class="mdui-icon material-icons">add</i></a>
+{/block}
+
+{block name="content" }
+
+<div class="mdui-tab mdui-tab-centered" mdui-tab>
+    <a href="#page-tab1" class="mdui-ripple">我的接力</a>
+    <a href="#page-tab2" class="mdui-ripple">接力我的</a>
+</div>
+<div id="page-tab1" class="mdui-p-a-2">
+    <div class="mdui-panel" mdui-panel>
+        {volist name="mineAfters" id="muse" key="key"}
+        <div class="mdui-panel-item mdui-panel-item-open">
+            <div class="mdui-panel-item-header">
+                <div class="mdui-panel-item-title">{$muse->getUserName()}</div>
+                <div class="mdui-panel-item-summary">{$muse->create_time}</div>
+                <div class="mdui-panel-item-summary">{$muse->floor}层</div>
+                <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+            </div>
+            <div class="mdui-panel-item-body">
+                {:preg_replace("/\\n/","<br />",urldecode($muse->content))}
+                <div class="mdui-panel-item-actions">
+                    <!-- <a href="{:url('Muse/goRelay?muse_id=' . $muse->museID)}"><button
+                            class="mdui-btn mdui-ripple">接力</button></a> -->
+                    <a href="{:url('Muse/line?muse_id=' . $muse->museID)}"><button
+                            class="mdui-btn mdui-ripple">查看详情</button></a>
+                </div>
+            </div>
+        </div>
+        {/volist}
+    </div>
+</div>
+
+<div id="page-tab2" class="mdui-p-a-2">
+    <div class="mdui-panel" mdui-panel>
+        {volist name="afterMines" id="muse" key="key"}
+        <div class="mdui-panel-item mdui-panel-item-open">
+            <div class="mdui-panel-item-header">
+                <div class="mdui-panel-item-title">{$muse->getUserName()}</div>
+                <div class="mdui-panel-item-summary">{$muse->create_time}</div>
+                <div class="mdui-panel-item-summary">{$muse->floor}层</div>
+                <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+            </div>
+            <div class="mdui-panel-item-body">
+                {:preg_replace("/\\n/","<br />",urldecode($muse->content))}
+                <div class="mdui-panel-item-actions">
+                    <!-- <a href="{:url('Muse/goRelay?muse_id=' . $muse->museID)}"><button
+                            class="mdui-btn mdui-ripple">接力</button></a> -->
+                    <a href="{:url('Muse/line?muse_id=' . $muse->museID)}"><button
+                            class="mdui-btn mdui-ripple">查看详情</button></a>
+                </div>
+            </div>
+        </div>
+
+        {/volist}
+    </div>
+</div>
+
+{/block}
