@@ -14,6 +14,10 @@ class UserModel extends Model
 		if (!is_null($user) && $user->checkPassword($password)) {
 			session('user_id', $user->getData('userID'));
             session('room_id', $user->getData('roomID'));
+            
+            $lastest = 3600*24*7;
+            cookie('username', $user->getData('username'), $lastest);
+            cookie('password', $user->getData('password'), $lastest);
 			return true;
 		}
 		return false;
@@ -35,12 +39,20 @@ class UserModel extends Model
     static public function logOut()
 	{
 		session('user_id', null);
+        cookie('username', null);
 		return true;
 	}
     
     static public function isLogin()
 	{
 		$user_id = session('user_id');
+        if (empty($user_id))
+        {
+            $username = cookie('username');
+            $password = cookie('password');
+            if (!empty($username) && !empty('password'))
+                return login($username, $password);
+        }
 		return !empty($user_id);
 	}
     
