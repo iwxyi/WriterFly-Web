@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         if (UserModel::logOut())
         {
-            return $this->success('退出成功', url('Index/rank'));
+            return $this->success('退出成功', url('rank//'));
         }
         else
         {
@@ -70,12 +70,12 @@ class UserController extends Controller
         if ($user->getData('roomID'))
         {
             session('room_id', $roomID);
-            return $this->error('您已加入房间', url('Index/rank?type=myroom'));
+            return $this->error('您已加入房间', url('rank//?type=myroom'));
         }
         // 加入房间
         $user->roomID = $roomID;
         session('room_id', $roomID);
-        return $this->success('加入房间成功', url('Index/rank?type=myroom'));
+        return $this->success('加入房间成功', url('rank//?type=myroom'));
     }
     
     public function exitRoom()
@@ -88,6 +88,6 @@ class UserController extends Controller
             return $this->goLogin();
         $user->room_id = '';
         session('room_id', null);
-        return $this->success('退出房间成功', url('Index/rank?type=room'));
+        return $this->success('退出房间成功', url('rank//?type=room'));
     }
 }

@@ -46,8 +46,9 @@ class UserModel extends Model
     static public function isLogin()
 	{
 		$user_id = session('user_id');
-        if (empty($user_id))
+        if (empty($user_id) && !session('tried_auto_login'))
         {
+            session('tried_auto_login', 1); // 尝试自动登录，避免频繁操作
             $username = cookie('username');
             $password = cookie('password');
             if (!empty($username) && !empty('password'))

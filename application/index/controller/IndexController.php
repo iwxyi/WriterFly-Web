@@ -70,7 +70,7 @@ class IndexController extends Controller
                 return $this->error('请先登录', url('User/goLogin'));
             $roomID = session('room_id');
             if ($roomID == '')
-                return $this->error('您尚未加入房间', url('Index/rank?type=room'));
+                return $this->error('您尚未加入房间', url('rank//?type=room'));
             $room = RoomModel::get(['roomID' => $roomID]);
             $this->assign('rank_name', $room->roomname);
 
