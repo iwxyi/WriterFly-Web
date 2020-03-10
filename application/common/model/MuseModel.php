@@ -13,9 +13,4 @@ class MuseModel extends Model
             return '';
         return $user->getName();
     }
-    
-    public function getLine($museID)
-    {
-        
-    }
 }

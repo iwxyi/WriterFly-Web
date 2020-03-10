@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use app\common\model\UserModel;
 use app\common\model\MuseModel;
+use app\common\model\SafeModel;
 use think\Controller;
 use think\Request;
 
@@ -40,9 +41,9 @@ class MuseController extends Controller
     public function goCreate()
     {
         $user = UserModel::currentUser();
-        $muse = MuseModel::get(['userID' => session('user_id'),'children_count'=>0]);
+        $muse = MuseModel::get(['userID' => session('user_id'), 'children_count'=>0, 'parentID'=>'0', 'banned'=>'0']);
         if (!is_null($muse))
-            return $this->error('您有情节未被接力，无法新建根情节');
+            return $this->error('您有开头情节未被接力，无法再次新建');
         $this->assign('isLogin', UserModel::isLogin() ? '1' : '0');
         return $this->fetch('create');
     }
@@ -60,6 +61,13 @@ class MuseController extends Controller
         {
             $this->assign('hasError', 'true');
             $this->assign('errorReason', '请输入30~300个汉字的内容');
+            $this->assign('default', $content);
+            return $this->goCreate();
+        }
+        else if (SafeModel::hasSensitive($content))
+        {
+            $this->assign('hasError', 'true');
+            $this->assign('errorReason', '请检查内容是否包含敏感词');
             $this->assign('default', $content);
             return $this->goCreate();
         }
@@ -116,14 +124,7 @@ class MuseController extends Controller
      */
     public function goRelay()
     {
-        $museID = Request::instance()->param('muse_id');
-        if (!isset($museID) || $museID == '')
-            return $this->error('未获取到情节');
-        $muse = MuseModel::get(['museID' => $museID]);
-        if (is_null($muse))
-            return $this->error('未找到该情节');
-        if ($muse->userID == session('user_id'))
-            return $this->error('不能接力自己的情节');
+        
     }
     
     /**
@@ -145,6 +146,8 @@ class MuseController extends Controller
         if (!is_null(MuseModel::get(['userID' => session('user_id'), 'parentID' => $parentID])))
             return $this->error('您已经接力过该情节了');
         $content = Request::instance()->param('content');
+        if (SafeModel::hasSensitive($content))
+            return $this->error('请检查自己的内容是否包含敏感词');
         if (mb_strlen($content) >= 300 || mb_strlen($content) < 30)
         {
             return $this->error('请输入30~300字的汉字接力');
