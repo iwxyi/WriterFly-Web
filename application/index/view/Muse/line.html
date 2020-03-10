@@ -15,7 +15,7 @@
 <div class="mdui-panel" mdui-panel>
 
     {volist name="parents" id="muse" key="key"}
-    <div class="mdui-panel-item mdui-panel-item-open">
+    <div class="mdui-panel-item mdui-panel-item-open" id="{$muse->museID}">
         <div class="mdui-panel-item-header">
             <div class="mdui-panel-item-title">{$muse->getUserName()}</div>
             <div class="mdui-panel-item-summary">{$muse->create_time}</div>
@@ -25,9 +25,7 @@
         <div class="mdui-panel-item-body">
             {:preg_replace("/\\n/","<br />",urldecode($muse->content))}
             <div class="mdui-panel-item-actions">
-                <!-- <a href="{:url('Muse/goRelay?muse_id=' . $muse->museID)}"><button
-                        class="mdui-btn mdui-ripple">接力</button></a> -->
-                <a href="{:url('Muse/line?muse_id=' . $muse->museID)}"><button
+                <a href="{:url('Muse/line?muse_id=' . $muse->museID)}#{$muse->museID}"><button
                         class="mdui-btn mdui-ripple">查看与接力</button></a>
                 <button class="mdui-btn mdui-ripple" mdui-dialog="{target: '#report-dialog-{$key}'}">
                     <font color='gray'>举报</font>
@@ -52,21 +50,26 @@
     {/volist}
 </div>
 
-<!-- 我的接力 -->
-{neq name="$current->userID" value="$Think.session.user_id"}
-<form method="post" action="{:url('Muse/relay')}">
-    <input type="hidden" name="muse_id" value="{$current->museID}" />
-    <div class="mdui-textfield">
-        <label class="mdui-textfield-label">接力该情节线(30-300字)</label>
-        <textarea class="mdui-textfield-input" name="content" maxlength="300"
-            minlength="30">{:isset($default) ? $default : ""}</textarea>
-    </div>
+<!-- 我要接力 -->
+{eq name="$isLogin" value="0"} <!-- 未登录 -->
+    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="{:url('User/goLogin')}">登录后可进行接力</a>
+{else/} <!-- 已登录 -->
+    {neq name="$current->userID" value="$Think.session.user_id"}
+    <form method="post" action="{:url('Muse/relay')}">
+        <input type="hidden" name="muse_id" value="{$current->museID}" />
+        <div class="mdui-textfield">
+            <label class="mdui-textfield-label">接力该情节线(30-300字)</label>
+            <textarea class="mdui-textfield-input" name="content" maxlength="300"
+                minlength="30">{:isset($default) ? $default : ""}</textarea>
+        </div>
+    
+        <input type="submit" value="接力" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" />
+    </form>
+    
+    <div class="mdui-divider"></div>
+    {/neq}
+{/eq}
 
-    <input type="submit" value="接力" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" />
-</form>
-
-<div class="mdui-divider"></div>
-{/neq}
 
 <!-- 子情节 -->
 <div class="mdui-textfield">

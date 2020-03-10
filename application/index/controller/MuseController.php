@@ -7,17 +7,6 @@ use think\Request;
 
 class MuseController extends Controller
 {
-    public function __construct()
-	{
-		// 调用父类的构造函数
-		parent::__construct();
-
-		// 验证用户是否登录
-		if (!UserModel::isLogin()) {
-			return $this->fetch('User/login');
-		}
-	}
-	
     /**
      * 根情节入口
      */
@@ -26,6 +15,7 @@ class MuseController extends Controller
         $muses = new MuseModel();
         $muses->where('floor = 1 and banned = 0')->order('children_count desc, relay_time desc');
         $muses = $muses->paginate(30);
+        $this->assign('isLogin', UserModel::isLogin() ? '1' : '0');
         $this->assign('muses', $muses);
         $this->assign('offspring', true);
         return $this->fetch('list');
@@ -109,6 +99,7 @@ class MuseController extends Controller
         $children->where("parentID='$museID' and create_time>'$create_time' and banned = 0")->order('create_time desc');
         $children = $children->select();
         
+        $this->assign('isLogin', UserModel::isLogin() ? '1' : '0');
         $this->assign('parents', $parents);
         $this->assign('current', $muse);
         $this->assign('children', $children);
@@ -186,6 +177,8 @@ class MuseController extends Controller
      */
     public function mine()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
         $userID = session('user_id');
         
         // 我的情节
