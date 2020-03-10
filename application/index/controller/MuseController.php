@@ -141,8 +141,10 @@ class MuseController extends Controller
         $parent = MuseModel::get(['museID' => $parentID]);
         if (is_null($parent))
             return $this->error('未找到该情节');
-        /* if ($parent->userID == session('user_id'))
-            return $this->error('不能接力自己的情节'); */
+        if ($parent->userID == session('user_id'))
+            return $this->error('不能接力自己的情节');
+        if (!is_null(MuseModel::get(['userID' => session('user_id'), 'parentID' => $parentID])))
+            return $this->error('您已经接力过该情节了');
         $content = Request::instance()->param('content');
         if (mb_strlen($content) >= 300 || mb_strlen($content) < 30)
         {
