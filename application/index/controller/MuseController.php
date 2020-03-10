@@ -14,7 +14,7 @@ class MuseController extends Controller
 
 		// 验证用户是否登录
 		if (!UserModel::isLogin()) {
-			return $this->fetch('User/goLogin');
+			return $this->fetch('User/login');
 		}
 	}
 	
@@ -158,29 +158,40 @@ class MuseController extends Controller
         $muse['relay_time'] = $muse['create_time'] = time();
         $muse->validate()->save();
         
+        $his_path = $parent['path'];
         $muse['path'] = $parent['path'] . ',' . $muse['museID'];
         $muse->validate()->save();
         
         $parent['children_count'] = $parent['children_count'] + 1;
-        $parent['offspring_count'] = $parent['offspring_count'] + 1;
         $parent['relay_time'] = time();
         $parent->validate()->save();
+        
+        $lines = new MuseModel();
+        $lines->where("find_in_set(museID, '$his_path')")->setInc('offspring_count');
+        
+        /* 清理三天前没有接力的 */
+        $time = time() - 3600*24*3;
+        
+        
+        
         return $this->success('接力成功', url('Muse/line?muse_id=' . $muse['museID']));
     }
     
     /**
-     * - 我的接力
      * - 我的情节
+     * - 接力我的
      */
     public function mine()
     {
         $userID = session('user_id');
         
+        // 我的情节
         // $mineAfters = MuseModel::get(['userID' => $userID]);
         $mines = new MuseModel();
         $mines->where("userID = '$userID'")->order('create_time desc');
         $mineAfters = $mines->select();
         
+        // 接力我的
         
         
         $this->assign('mineAfters', $mineAfters);

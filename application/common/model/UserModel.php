@@ -39,7 +39,7 @@ class UserModel extends Model
     static public function logOut()
 	{
 		session('user_id', null);
-        cookie('username', null);
+        cookie('password', null);
 		return true;
 	}
     
@@ -52,7 +52,7 @@ class UserModel extends Model
             $username = cookie('username');
             $password = cookie('password');
             if (!empty($username) && !empty('password'))
-                return login($username, $password);
+                return UserModel::login($username, $password);
         }
 		return !empty($user_id);
 	}

@@ -53,7 +53,7 @@
 </div>
 
 <!-- 我的接力 -->
-{neq name="$current->userID" value="$Think.session.user_idaaaaaaaaaaaaaaaaaaaaaaaaa"}
+{neq name="$current->userID" value="$Think.session.user_idaaa"}
 <form method="post" action="{:url('Muse/relay')}">
     <input type="hidden" name="muse_id" value="{$current->museID}" />
     <div class="mdui-textfield">
@@ -79,6 +79,7 @@
         <div class="mdui-panel-item-header">
             <div class="mdui-panel-item-title">{$muse->getUserName()}</div>
             <div class="mdui-panel-item-summary">{$muse->create_time}</div>
+            <div class="mdui-panel-item-summary">{$muse->offspring_count}子情节</div>
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
         </div>
         <div class="mdui-panel-item-body">
