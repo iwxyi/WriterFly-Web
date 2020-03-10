@@ -22,8 +22,8 @@
         <option>Linux 内测</option>
         <option>Windows 内测</option>
         <option>码字风云 下载</option>
-        <option>Android-v7a 内测</option>
-        <option>Android-x86 内测</option>
+        <option>Android-v7a 体验</option>
+        <option>Android-x86 体验</option>
         <option disabled>Mac 未开放</option>
         <option disabled>iOS 未开放</option>
         <!-- <option>百度网盘(历史版本)</option> -->
@@ -34,7 +34,7 @@
         <span class="mdui-chip-title">下载次数：{{downloadCount}} 次</span>
     </div>
 
-    <video class="mdui-video-fluid mdui-m-a-5" controls>
+    <video class="mdui-video-fluid mdui-m-t-3 mdui-m-b-3" controls>
         <source src="__STATIC__/video/rumen.mp4" type="video/mp4">
     </video>
     
@@ -130,8 +130,8 @@ $scope.downloads = [
     {id:2, key:'Windows 内测', file:'写作天下Beta-Linux.zip'},
     {id:3, key:'Mac 暂未开放', file:''},
     {id:4, key:'码字风云 下载', file:'码字风云.zpk'},
-    {id:5, key:'Android-v7a 内测', file:'写作天下Beta-Android-v7a.apk'},
-    {id:6, key:'Android-x86 内测', file:'写作天下Beta-Android-x86.apk'},
+    {id:5, key:'Android-v7a 体验', file:'写作天下Beta-Android-v7a.apk'},
+    {id:6, key:'Android-x86 体验', file:'写作天下Beta-Android-x86.apk'},
     {id:7, key:'iOS 暂未开发', file:''},
     {id:8, key:'网盘(历史版本) 下载', file:'', url:''},
     {id:9, key:'更多平台敬请期待', file:'', url:''},
@@ -157,11 +157,11 @@ $scope.$watch('download', function(newVal, oldVal, scope){
         window.location.href=dir+"码字风云.apk";
         $scope.addDownload('mzfy')
         break;
-    case 'Android-v7a 内测':
+    case 'Android-v7a 体验':
         window.location.href=dir+"写作天下Beta-Android-v7a.apk";
         $scope.addDownload('Android-v7a');
         break;
-    case 'Android-x86 内测':
+    case 'Android-x86 体验':
         window.location.href=dir+"写作天下Beta-Android-x86.apk";
         $scope.addDownload('Android-x86');
         break;

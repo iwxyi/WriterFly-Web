@@ -28,7 +28,7 @@
 </div>
 
 {eq name="$isLogin" value="0"} <!-- 未登录 -->
-    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="{:url('User/goLogin')}">登录后可进行接力</a>
+    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="{:url('User/goLogin')}">登录后可创建情节</a>
 {else/} <!-- 已登录 -->
     <form method="post" action="{:url('Muse/create')}">
         <div class="mdui-textfield">

@@ -10,7 +10,8 @@
     <script src="__STATIC__/angularjs/angular.js"></script>
 </head>
 
-<body class="mdui-appbar-with-toolbar mdui-drawer-body-left" ng-controller="ctrl">
+<!-- <body class="mdui-appbar-with-toolbar mdui-drawer-body-left" ng-controller="ctrl"> -->
+<body ng-class="{ 'mdui-appbar-with-toolbar': true, 'mdui-drawer-body-left': true, 'mdui-appbar-with-tab': useTabBar }" ng-controller="ctrl">
 
     <!-- 应用栏 -->
     <div class="mdui-appbar mdui-appbar-fixed">
@@ -56,6 +57,9 @@
                 </li>
             </ul>
         </div>
+
+        {block name="tab-bar"}
+        {/block}
     </div>
     
     <!-- 默认抽屉栏在左侧 -->
@@ -132,6 +136,7 @@
     var myApp = angular.module('app', []);
 
     myApp.controller("ctrl", ["$scope", '$http', function ($scope, $http) {
+        $scope.useTabBar = false;
         $scope.searchKey = '';
         $scope.searchKeyUp = function(e) {
             console.log('按键弹起');

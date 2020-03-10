@@ -43,6 +43,7 @@ class MuseController extends Controller
         $muse = MuseModel::get(['userID' => session('user_id'),'children_count'=>0]);
         if (!is_null($muse))
             return $this->error('您有情节未被接力，无法新建根情节');
+        $this->assign('isLogin', UserModel::isLogin() ? '1' : '0');
         return $this->fetch('create');
     }
     
@@ -51,6 +52,9 @@ class MuseController extends Controller
      */
     public function create()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $content = trim(Request::instance()->param('content'));
         if (mb_strlen($content) >= 300 || mb_strlen($content) < 30)
         {
@@ -127,6 +131,9 @@ class MuseController extends Controller
      */
     public function relay()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $parentID = Request::instance()->param('muse_id');
         if (!isset($parentID) || $parentID == '')
             return $this->error('未获取到情节');

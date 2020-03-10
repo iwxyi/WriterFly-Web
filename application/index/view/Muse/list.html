@@ -6,25 +6,26 @@
 <a href="{:url('Muse/goCreate')}"><i class="mdui-icon material-icons">add</i></a>
 {/block}
 
-{block name="content" }
-
+{block name="tab-bar"}
 <div class="mdui-tab mdui-tab-centered" mdui-tab>
-{eq name=":isset($latest)" value="true"}
+    {eq name=":isset($latest)" value="true"}
     <a href="{:url('Muse/entrance')}" class="mdui-ripple">深渊入口</a>
-    <a href="{:url('Muse/latest')}" class="mdui-ripple mdui-tab-active" >最新情节</a>
-{else/}
+    <a href="{:url('Muse/latest')}" class="mdui-ripple mdui-tab-active">最新接力</a>
+    {else/}
     <a href="{:url('Muse/entrance')}" class="mdui-ripple mdui-tab-activeS">深渊入口</a>
-    <a href="{:url('Muse/latest')}" class="mdui-ripple" >最新情节</a>
-{/eq}
+    <a href="{:url('Muse/latest')}" class="mdui-ripple">最新接力</a>
+    {/eq}
 </div>
+{/block}
 
+{block name="content" }
 <div class="mdui-panel" mdui-panel>
 
     {volist name="muses" id="muse" key="key"}
     <div class="mdui-panel-item mdui-panel-item-open">
         <div class="mdui-panel-item-header">
             <div class="mdui-panel-item-title">{$muse->getUserName()}</div>
-            <div class="mdui-panel-item-summary">{$muse->create_time}</div>
+            <div class="mdui-panel-item-summary">{:date('m-d H:i', strtotime($muse->create_time))}</div>
             {eq name=":isset($offspring)" value="true"}
                 <div class="mdui-panel-item-summary">{$muse->offspring_count}子情节</div>
             {else/}
@@ -62,4 +63,8 @@
     <div class="mdui-center">{$muses->render()}</div>
 </div>
 
+{/block}
+
+{block name="scope"}
+$scope.useTabBar=true;
 {/block}
