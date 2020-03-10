@@ -24,7 +24,7 @@ class MuseController extends Controller
     public function entrance()
     {
         $muses = new MuseModel();
-        $muses->where('floor = 1')->order('children_count desc, relay_time desc');
+        $muses->where('floor = 1 and banned = 0')->order('children_count desc, relay_time desc');
         $muses = $muses->paginate(30);
         $this->assign('muses', $muses);
         $this->assign('offspring', true);
@@ -37,7 +37,7 @@ class MuseController extends Controller
     public function latest()
     {
         $muses = new MuseModel();
-        $muses->order('create_time desc');
+        $muses->where('banned = 0')->order('create_time desc');
         $muses = $muses->paginate(30);
         $this->assign('muses', $muses);
         return $this->fetch('list');
@@ -101,12 +101,12 @@ class MuseController extends Controller
         
         // 获取父情节：create早
         $parents = new MuseModel();
-        $parents->where("find_in_set(museID, '$path') and create_time<='$create_time'")->order('create_time');
+        $parents->where("find_in_set(museID, '$path') and create_time<='$create_time' and banned = 0")->order('create_time');
         $parents = $parents->select();
         
         // 获取子情节：create晚
         $children = new MuseModel();
-        $children->where("parentID='$museID' and create_time>'$create_time'")->order('create_time desc');
+        $children->where("parentID='$museID' and create_time>'$create_time' and banned = 0")->order('create_time desc');
         $children = $children->select();
         
         $this->assign('parents', $parents);
@@ -188,12 +188,12 @@ class MuseController extends Controller
         
         // 我的情节
         $mines = new MuseModel();
-        $mines->where("userID = '$userID'")->order('create_time desc');
+        $mines->where("userID = '$userID' and banned = 0")->order('create_time desc');
         $mineAfters = $mines->select();
         
         // 接力我的
         $nexts = new MuseModel();
-        $nexts->where("prev_userID = '$userID'")->order('create_time desc');
+        $nexts->where("prev_userID = '$userID' and banned = 0")->order('create_time desc');
         $afterMines = $nexts->select();
         
         $this->assign('mineAfters', $mineAfters);
