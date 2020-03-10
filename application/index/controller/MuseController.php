@@ -155,6 +155,7 @@ class MuseController extends Controller
         $muse['parentID'] = $parentID;
         $muse['content'] = $content;
         $muse['floor'] = $parent['floor'] + 1;
+        $muse['prev_userID'] = $parent['userID'];
         $muse['relay_time'] = $muse['create_time'] = time();
         $muse->validate()->save();
         
@@ -186,16 +187,17 @@ class MuseController extends Controller
         $userID = session('user_id');
         
         // 我的情节
-        // $mineAfters = MuseModel::get(['userID' => $userID]);
         $mines = new MuseModel();
         $mines->where("userID = '$userID'")->order('create_time desc');
         $mineAfters = $mines->select();
         
         // 接力我的
-        
+        $nexts = new MuseModel();
+        $nexts->where("prev_userID = '$userID'")->order('create_time desc');
+        $afterMines = $nexts->select();
         
         $this->assign('mineAfters', $mineAfters);
-        $this->assign('afterMines', []);
+        $this->assign('afterMines', $afterMines);
         return $this->fetch('mine');
     }
     
