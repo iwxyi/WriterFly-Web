@@ -29,6 +29,7 @@ class MuseController extends Controller
         $muses = new MuseModel();
         $muses->where('banned = 0')->order('create_time desc');
         $muses = $muses->paginate(30);
+        $this->assign('latest', true);
         $this->assign('muses', $muses);
         return $this->fetch('list');
     }

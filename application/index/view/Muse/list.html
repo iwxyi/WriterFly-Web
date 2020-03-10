@@ -8,6 +8,16 @@
 
 {block name="content" }
 
+<div class="mdui-tab mdui-tab-centered" mdui-tab>
+{eq name=":isset($latest)" value="true"}
+    <a href="{:url('Muse/entrance')}" class="mdui-ripple">深渊入口</a>
+    <a href="{:url('Muse/latest')}" class="mdui-ripple mdui-tab-active" >最新情节</a>
+{else/}
+    <a href="{:url('Muse/entrance')}" class="mdui-ripple mdui-tab-activeS">深渊入口</a>
+    <a href="{:url('Muse/latest')}" class="mdui-ripple" >最新情节</a>
+{/eq}
+</div>
+
 <div class="mdui-panel" mdui-panel>
 
     {volist name="muses" id="muse" key="key"}
