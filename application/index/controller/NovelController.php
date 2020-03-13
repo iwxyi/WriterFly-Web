@@ -292,17 +292,28 @@ class NovelController extends Controller
         
         $chapterID = Request::instance()->param('chapter_id');
         $userID = session('user_id');
-        if (ChapterLikeModel::isLiked($chapterID, $userID))
-            return $this->error('您已经喜欢过了');
-        $chlk = new ChapterLikeModel();
-        $chlk['chapterID'] = $chapterID;
-        $chlk['userID'] = $userID;
-        $chlk['create_time'] = time();
-        $chlk->validate()->save();
-        
-        $chapter = ChapterModel::get(['chapterID' => $chapterID]);
-        $chapter['like_count'] = $chapter['like_count'] + 1;
-        $chapter->validate()->save();
+        $liked = ChapterLikeModel::isLiked($chapterID, $userID);
+        if ($liked) // 已经喜欢了，取消
+        {
+            $chlk = new ChapterLikeModel();
+            $chlk->where("chapterID = '$chapterID' and userID = '$userID'")->delete();
+            
+            $chapter = ChapterModel::get(['chapterID' => $chapterID]);
+            $chapter['like_count'] = $chapter['like_count'] - 1;
+            $chapter->validate()->save();
+        }
+        else // 开始喜欢
+        {
+            $chlk = new ChapterLikeModel();
+            $chlk['chapterID'] = $chapterID;
+            $chlk['userID'] = $userID;
+            $chlk['create_time'] = time();
+            $chlk->validate()->save();
+            
+            $chapter = ChapterModel::get(['chapterID' => $chapterID]);
+            $chapter['like_count'] = $chapter['like_count'] + 1;
+            $chapter->validate()->save();
+        }
         
         return 'success';
     }

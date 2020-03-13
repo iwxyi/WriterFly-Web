@@ -48,8 +48,8 @@ $scope.likeCount = new Map();
     $scope.likeIcon.set("{$chapter->chapterID}", {eq name=":in_array($chapter->chapterID, $myLikes)" value="true"}'favorite'{else/}'favorite_border'{/eq});
     $scope.likeCount.set("{$chapter->chapterID}", {$chapter->like_count});
 {/volist}
-console.log($scope.likeIcon);
-console.log({:json_encode($likes)});
+// console.log($scope.likeIcon);
+// console.log({:json_encode($likes)});
 $scope.like = function(chapterID) {
     if ("{$Think.session.user_id}" == "")
     {
@@ -58,6 +58,17 @@ $scope.like = function(chapterID) {
     }
 
     var url = "{:url('Novel/likeChapter')}";
-    $http.post(url + '?chapter_id=' + chapterID).then(function(response){ if (response.status == 200 && response.data=='success') { $scope.likeCount.set(chapterID, $scope.likeCount.get(chapterID)+1); $scope.likeIcon.set(chapterID, 'favorite'); } }, function(response){});
+    $http.post(url + '?chapter_id=' + chapterID)
+         .then(function(response){ 
+            if (response.status == 200 && response.data=='success') {
+                if ($scope.likeIcon.get(chapterID) == 'favorite_border') {
+                    $scope.likeCount.set(chapterID, $scope.likeCount.get(chapterID)+1);
+                    $scope.likeIcon.set(chapterID, 'favorite');
+                } else {
+                    $scope.likeCount.set(chapterID, $scope.likeCount.get(chapterID)-1);
+                    $scope.likeIcon.set(chapterID, 'favorite_border');
+                }
+            }
+        }, function(response){});
 }
 {/block}
