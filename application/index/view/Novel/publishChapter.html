@@ -133,7 +133,7 @@ $scope.goLive = function() {
 
     function copy()
     {
-        var url = "{:url('Novel/sc?chapter_id=' . $chapter->chapterID)}";
+        var url = "{:url('c//?id=' . $chapter->chapterID)}";
         copyToClipboard(url);
         mdui.snackbar({
             message: '复制分享网址成功',

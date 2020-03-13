@@ -104,6 +104,8 @@ class NovelController extends Controller
     public function publishedChapter()
     {
         $chapterID = Request::instance()->param('chapter_id');
+        if (is_null($chapterID) || empty($chapterID))
+            $chapterID = Request::instance()->param('id');
         $chapter = ChapterModel::get(['chapterID' => $chapterID, 'kind' => 0, 'del' => 0]);
         if (is_null($chapterID))
             return $this->error('没有这篇章节');
@@ -187,7 +189,7 @@ class NovelController extends Controller
         {
             $chapter['publish_title'] = $chapter['title'];
             $chapter['publish_body'] = $chapter['body'];
-            $chapter['publish_time'] = $chapter['sync_time'] = time();
+            $chapter['publish_time'] = time();
             $chapter['publish_state'] = 1;
         }
         $chapter->validate()->save();

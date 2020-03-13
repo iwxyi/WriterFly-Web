@@ -15,7 +15,7 @@
             <div class="mdui-list-item-title">{$chapter->title} - <span class="mdui-text-color-theme-text">{:mb_strlen(preg_replace("/[\s　]/","",urldecode($chapter->body)))}字</span></div>
             <div class="mdui-list-item-text mdui-list-item-one-line">{:preg_replace("/^[\s　]+/","",urldecode($chapter->body))}</div>
         </div>
-        <i class="mdui-list-item-icon mdui-icon material-icons">info</i>
+        <i class="mdui-list-item-icon mdui-icon material-icons">{eq name="$chapter->publish_state" value="1"}publish{else/}info{/eq}</i>
 
         <div class="mdui-dialog" id="chapter-dialog-{$key}">
             <div class="mdui-dialog-content">

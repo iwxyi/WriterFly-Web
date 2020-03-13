@@ -25,3 +25,4 @@ Route::rule('rank','index/index/rank');
 Route::rule('r','index/index/rank');
 Route::rule('share','index/novel/publishedChapters');
 Route::rule('s','index/novel/publishedChapters');
+Route::rule('c','index/novel/publishedChapter/');
