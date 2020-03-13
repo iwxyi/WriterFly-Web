@@ -3,6 +3,7 @@ namespace app\index\controller;
 use app\common\model\UserModel;
 use app\common\model\NovelModel;
 use app\common\model\ChapterModel;
+use app\common\model\ChapterLikeModel;
 use think\Controller;
 use think\Request;
 
@@ -43,6 +44,9 @@ class NovelController extends Controller
     
     public function dir()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $novelname = Request::instance()->param('novelname');
         $chapters = new ChapterModel();
         $chapters->where("userID='".session('user_id')."' and novelname='$novelname' and kind=0 and del=0");
@@ -54,6 +58,9 @@ class NovelController extends Controller
     
     public function chapters()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $novelname = Request::instance()->param('novelname');
         $chapters = new ChapterModel();
         $chapters->where("userID='".session('user_id')."' and novelname='$novelname' and kind=0 and del=0");
@@ -83,6 +90,12 @@ class NovelController extends Controller
         if (is_null($chapterID))
             return $this->error('没有这篇章节');
         
+        // 保存到阅读次数
+        if (session('read_chapter_' . $chapterID) == null)
+            session('read_chapter_' . $chapterID, '1');
+        $chapter['read_count'] = $chapter['read_count'] + 1;
+        $chapter->validate()->save();
+        
         $this->assign('chapter', $chapter);
         return $this->fetch('publishedChapter');
     }
@@ -94,6 +107,9 @@ class NovelController extends Controller
     
     public function saveChapter()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $param = Request::instance()->param();
         $chapterID = $param['chapter_id'];
         $title = $param['title'];
@@ -119,6 +135,9 @@ class NovelController extends Controller
     
     public function savePublishChapter()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $param = Request::instance()->param();
         $chapterID = $param['chapter_id'];
         $title = $param['title'];
@@ -137,6 +156,9 @@ class NovelController extends Controller
     
     public function goPublishChapter()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $param = Request::instance()->param();
         $chapterID = $param['chapter_id'];
         $chapter = ChapterModel::get(['chapterID' => $chapterID, 'userID' => session('user_id')]);
@@ -158,6 +180,9 @@ class NovelController extends Controller
     
     public function publishChapter()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $param = Request::instance()->param();
         $chapterID = $param['chapter_id'];
         $chapter = ChapterModel::get(['chapterID' => $chapterID, 'userID' => session('user_id')]);
@@ -177,6 +202,9 @@ class NovelController extends Controller
     
     public function unpublishChapter()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $param = Request::instance()->param();
         $chapterID = $param['chapter_id'];
         $chapter = ChapterModel::get(['chapterID' => $chapterID, 'userID' => session('user_id')]);
@@ -195,6 +223,9 @@ class NovelController extends Controller
     
     public function livePublish()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $param = Request::instance()->param();
         $chapterID = $param['chapter_id'];
         $chapter = ChapterModel::get(['chapterID' => $chapterID, 'userID' => session('user_id')]);
@@ -214,6 +245,8 @@ class NovelController extends Controller
     
     public function publishedChapters()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
         $chapters = new ChapterModel();
         $chapters->where("kind=0 and publish_state=1 and del=0");
         $chapters->order('publish_time desc');
@@ -225,6 +258,9 @@ class NovelController extends Controller
     
     public function myPublishList()
     {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
         $chapters = new ChapterModel();
         $chapters->where("userID='".session('user_id')."' and kind=0 and publish_state=1 and del=0");
         $chapters->order('publish_time desc');
@@ -232,6 +268,28 @@ class NovelController extends Controller
         
         $this->assign('chapters', $chapters);
         return $this->fetch('publishedChaptera');
+    }
+    
+    public function likeChapter()
+    {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
+        $chapterID = Request::instance()->param('chapter_id');
+        $userID = session('user_id');
+        if (ChapterLikeModel::isLiked($chapterID, $userID))
+            return $this->error('您已经喜欢过了');
+        $chlk = new ChapterLikeModel();
+        $chlk['chapterID'] = $chapterID;
+        $chlk['userID'] = $userID;
+        $chlk['create_time'] = time();
+        $chlk->validate()->save();
+        
+        $chapter = ChapterModel::get(['chapterID' => $chapterID]);
+        $chapter['read_count'] = $chapter['read_count'] + 1;
+        $chapter->validate()->save();
+        
+        return 'success';
     }
     
     public function publishedNovels()

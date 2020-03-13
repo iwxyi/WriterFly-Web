@@ -9,14 +9,35 @@
     <div class="mdui-typo-title mdui-m-t-2 mdui-m-b-2">带着愉悦的心情创作，执云作笔，诉尽平生意。</div>
     <blockquote>
         <p>集简约 UI 与人性化 AI 于一体的码字工具，无论是小说、作文、日记、报告，都能轻松驾驭。</p>
-        <footer><a href="https://shang.qq.com/wpa/qunwpa?idkey=ded2b6cd5a973b026afc58d46b17ef1abd611ce82454053ffb5f510105b01f3b" target="_blank">QQ交流群：705849222</a></footer>
+        <footer>
+            {eq name="$d" value="mzfy"}
+            <a href="https://shang.qq.com/wpa/qunwpa?idkey=a2cb0e484845a4d3eb61bf7ef84ddad38d9f8e3401496fc1d38fa53bd9d8861b" target="_blank">QQ交流群：964259073</a>
+            <div class="mdui-panel" mdui-panel>
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">码字风云 教程视频</div>
+                        <div class="mdui-panel-item-summary">3篇</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+                        <p><a href="https://www.bilibili.com/video/av27591664/" target="_blank">教程【智能标点篇】</a></p>
+                        <p><a href="https://www.bilibili.com/video/av30438872/" target="_blank">教程【侧边栏与名片篇】</a></p>
+                        <p><a href="https://www.bilibili.com/video/av29585962/" target="_blank">教程【雪花篇】</a></p>
+                    </div>
+                </div>
+            </div>
+            {else/}
+            <a href="https://shang.qq.com/wpa/qunwpa?idkey=ded2b6cd5a973b026afc58d46b17ef1abd611ce82454053ffb5f510105b01f3b" target="_blank">QQ交流群：705849222</a>
+            {/eq}
+        </footer>
     </blockquote>
 
     {eq name="$d" value="mzfy"}
     <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="__STATIC__/package/码字风云.apk" ng-click="addDownload('mzfy');">码字风云 本地下载</a>
     {/eq}
     <span>　　</span>
-    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="__STATIC__/package/写作天下-Windows.zip" ng-click="addDownload('Windows');">Windows 下载</a>
+    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="__STATIC__/package/写作天下-Windows.zip" ng-click="addDownload('Windows');">
+        {eq name="$d" value="mzfy"}写作天下(PC版) 下载{else/}Windows 下载{/eq}</a>
     <span>　　</span>
     <select class="mdui-select" mdui-select ng-model="download" id="mored">
         <option>Linux 内测</option>
@@ -118,7 +139,7 @@
 </div>
 
 <!-- 浮动按钮 -->
-<button class="mdui-fab mdui-fab-fixed mdui-ripple"><i class="mdui-icon material-icons">arrow_downward</i></button>
+<button class="mdui-fab mdui-fab-fixed mdui-ripple" ng-click="addDownload('Windows');"><i class="mdui-icon material-icons">arrow_downward</i></button>
 
 {/block}
 

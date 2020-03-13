@@ -67,7 +67,7 @@ class MuseController extends Controller
         else if (SafeModel::hasSensitive($content))
         {
             $this->assign('hasError', 'true');
-            $this->assign('errorReason', '请检查内容是否包含敏感词');
+            $this->assign('errorReason', '请检查内容或格式是否规范');
             $this->assign('default', $content);
             return $this->goCreate();
         }
@@ -147,7 +147,7 @@ class MuseController extends Controller
             return $this->error('您已经接力过该情节了');
         $content = Request::instance()->param('content');
         if (SafeModel::hasSensitive($content))
-            return $this->error('请检查自己的内容是否包含敏感词');
+            return $this->error('请检查内容或格式是否规范');
         if (mb_strlen($content) >= 300 || mb_strlen($content) < 30)
         {
             return $this->error('请输入30~300字的汉字接力');
