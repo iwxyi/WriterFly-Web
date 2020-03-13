@@ -286,7 +286,7 @@ class NovelController extends Controller
         $chlk->validate()->save();
         
         $chapter = ChapterModel::get(['chapterID' => $chapterID]);
-        $chapter['read_count'] = $chapter['read_count'] + 1;
+        $chapter['like_count'] = $chapter['like_count'] + 1;
         $chapter->validate()->save();
         
         return 'success';

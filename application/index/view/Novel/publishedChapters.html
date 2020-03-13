@@ -30,7 +30,7 @@
 
             <div class="mdui-panel-item-actions">
                 <a href="{:url('Novel/sc?chapter_id=' . $chapter->chapterID)}" target="_blank"><button class="mdui-btn mdui-ripple">阅读</button></a>
-                <button class="mdui-btn mdui-ripple" ng-click="like('{$chapter->chapterID}');"><i class="mdui-icon material-icons">{{likeIcon['{$chapter->chapterID}']}}</i><span class="mdui-chip-title">{{likeCount}}</span></button>
+                <button class="mdui-btn mdui-ripple" ng-click="like('{$chapter->chapterID}');"><i class="mdui-icon material-icons">{{likeIcon.get('{$chapter->chapterID}')}}</i><span class="mdui-chip-title">{{likeCount.get('{$chapter->chapterID}')}}</span></button>
                 <button class="mdui-btn mdui-ripple"><i class="mdui-icon material-icons">remove_red_eye</i><span class="mdui-chip-title">{$chapter->read_count}</span></button>
             </div>
         </div>
@@ -42,11 +42,11 @@
 {/block}
 
 {block name="scope"}
-$scope.likeCount = {$chapter->like_count};
-$scope.likeIcon=[];
+$scope.likeIcon = new Map();
+$scope.likeCount = new Map();
 {volist name="chapters" id="chapter" key="key"}
-    $scope.likeIcon['{$chapter->chapterID}']='favorite_border';
-    console.log({$chapter->chapterID}, $scope.likeIcon['{$chapter->chapterID}']);
+    $scope.likeIcon.set("{$chapter->chapterID}", 'favorite_border');
+    $scope.likeCount.set("{$chapter->chapterID}", {$chapter->like_count});
 {/volist}
 $scope.like = function(chapterID) {
     if ("{$Think.session.user_id}" == "")
@@ -56,6 +56,6 @@ $scope.like = function(chapterID) {
     }
 
     var url = "{:url('Novel/likeChapter')}";
-    $http.post(url + '?chapter_id=' + chapterID).then(function(response){ if (response.status == 200 && response.data=='success') { $scope.likeCount++; $scope.likeIcon[chapterID]='favorite'; console.log(chapterID, $scope.likeIcon[chapterID]);} }, function(response){});
+    $http.post(url + '?chapter_id=' + chapterID).then(function(response){ if (response.status == 200 && response.data=='success') { $scope.likeCount.set(chapterID, $scope.likeCount.get(chapterID)+1); $scope.likeIcon.set(chapterID, 'favorite'); } }, function(response){});
 }
 {/block}
