@@ -5,11 +5,21 @@
 {block name="content" }
 
 <div class="mdui-panel" mdui-panel>
+    <div class="mdui-panel-item mdui-panel-item-open">
+        <div class="mdui-panel-item-header">说明</div>
+        <div class="mdui-panel-item-body">
+            <p>网页版仅用于作品发布与交流，</p>
+            <p>更多操作请配合客户端使用。</p>
+        </div>
+    </div>
+</div>
+
+<div class="mdui-panel" mdui-panel>
 
     {volist name="novels" id="novel" key="key"}
     <div class="mdui-panel-item">
         <div class="mdui-panel-item-header">
-            <div class="mdui-panel-item-title">{$novel->name}</div>
+            <div class="mdui-panel-item-title">《{$novel->name}》</div>
             <div class="mdui-panel-item-summary">{:date("Y-m-d H:i:s", $novel->sync_time)}</div>
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
         </div>

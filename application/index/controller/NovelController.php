@@ -53,6 +53,8 @@ class NovelController extends Controller
         $chapters->order('sync_time desc');
         $chapters = $chapters->select();
         /* 章节排序 */
+        
+        $this->assign('title', $novelname);
         return $this->fetch('dir');
     }
     
@@ -68,6 +70,22 @@ class NovelController extends Controller
         $chapters = $chapters->paginate(20);
         
         $this->assign('novelname', $novelname);
+        $this->assign('title', $novelname);
+        $this->assign('chapters', $chapters);
+        return $this->fetch('chapters');
+    }
+    
+    public function singleChapterList()
+    {
+        if (!UserModel::isLogin())
+            return $this->error('请先登录', url('User/goLogin'));
+        
+        $chapters = new ChapterModel();
+        $chapters->where("userID='".session('user_id')."' and kind=0 and del=0");
+        $chapters->order('sync_time desc');
+        $chapters = $chapters->paginate(20);
+        
+        $this->assign('title', '最新章节');
         $this->assign('chapters', $chapters);
         return $this->fetch('chapters');
     }
@@ -247,10 +265,17 @@ class NovelController extends Controller
     {
         $chapters = new ChapterModel();
         $targetUserID = Request::instance()->param('user_id');
-        if ($targetUserID != null && !empty($targetUserID))
+        if ($targetUserID != null && !empty($targetUserID)) // 看特定作者的发布内容
+        {
             $chapters->where("kind=0 and publish_state=1 and del=0 and userID='$targetUserID'");
-        else
+            $user = UserModel::get(['userID' => $targetUserID]);
+            $this->assign('title', $user->getName() . " 的发布内容");
+        }
+        else // 看全部作者的发布内容
+        {
             $chapters->where("kind=0 and publish_state=1 and del=0");
+            $this->assign('title', '分享广场');
+        }
         $chapters->order('publish_time desc');
         $chapters = $chapters->paginate(30);
         
@@ -270,7 +295,6 @@ class NovelController extends Controller
             }
         }
         
-        $this->assign('title', '分享广场');
         $this->assign('chapters', $chapters);
         $this->assign('likes', $likes);
         $this->assign('myLikes', $myLikes);

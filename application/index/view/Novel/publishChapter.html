@@ -10,7 +10,7 @@
 {block name="content" }
 
 <!-- 发布状态  -->
-<label class="mdui-checkbox mdui-m-l-1" mdui-tooltip="{content: '是否设置其他人可见（广场中）'}">
+<label class="mdui-checkbox mdui-m-l-1" mdui-tooltip="{content: '是否发布，即其他人可见（广场中）'}">
     <input type="checkbox" ng-click="goPublish()" ng-checked="publish_state"/>
     <i class="mdui-checkbox-icon"></i>发布
 </label>
@@ -22,7 +22,7 @@
 
 <!-- 发布提示 -->
 <div class="mdui-chip mdui-m-l-4">
-    <span class="mdui-chip-title">发布页保存的不影响原文（除非再次发布）</span>
+    <span class="mdui-chip-title">发布页保存的不影响原文（再次发布将被覆盖）</span>
 </div>
 
 <!-- 标题 -->
