@@ -247,12 +247,27 @@ class NovelController extends Controller
     {
         if (!UserModel::isLogin())
             return $this->error('请先登录', url('User/goLogin'));
+        $userID = session('user_id');
         $chapters = new ChapterModel();
         $chapters->where("kind=0 and publish_state=1 and del=0");
         $chapters->order('publish_time desc');
-        $chapters = $chapters->paginate(20);
+        $chapters = $chapters->paginate(30);
+        
+        $likes = new ChapterLikeModel();
+        $likes->where("userID = '$userID'");
+        $likes = $likes->select();
+        $myLikes = array();
+        if ($likes != null)
+        {
+            foreach ($likes as $like)
+            {
+                array_push($myLikes, $like->chapterID);
+            }
+        }
         
         $this->assign('chapters', $chapters);
+        $this->assign('likes', $likes);
+        $this->assign('myLikes', $myLikes);
         return $this->fetch('publishedChapters');
     }
     

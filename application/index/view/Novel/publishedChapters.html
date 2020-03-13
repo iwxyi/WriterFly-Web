@@ -45,9 +45,11 @@
 $scope.likeIcon = new Map();
 $scope.likeCount = new Map();
 {volist name="chapters" id="chapter" key="key"}
-    $scope.likeIcon.set("{$chapter->chapterID}", 'favorite_border');
+    $scope.likeIcon.set("{$chapter->chapterID}", {eq name=":in_array($chapter->chapterID, $myLikes)" value="true"}'favorite'{else/}'favorite_border'{/eq});
     $scope.likeCount.set("{$chapter->chapterID}", {$chapter->like_count});
 {/volist}
+console.log($scope.likeIcon);
+console.log({:json_encode($likes)});
 $scope.like = function(chapterID) {
     if ("{$Think.session.user_id}" == "")
     {
