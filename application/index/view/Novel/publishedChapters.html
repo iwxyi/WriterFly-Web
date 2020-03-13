@@ -10,17 +10,21 @@
     <div class="mdui-panel-item mdui-panel-item-open">
         <div class="mdui-panel-item-header">
             <div class="mdui-panel-item-title">
-                <div class="mdui-chip">
+                <a class="mdui-chip" href="{:url('s//?user_id=' . $chapter->getUser()->userID)}" target="_blank">
                     <span class="mdui-chip-icon">{:mb_substr($chapter->getUser()->getName(),0,1)}</span>
-                    <span class="mdui-chip-title">{$chapter->title}</span>
-                </div>
+                    <span class="mdui-chip-title">{$chapter->getUser()->getName()}</span>
+                    <!-- <span class="mdui-chip-title">{$chapter->title}</span> -->
+                </a>
+            </div>
+            <div class="mdui-panel-item-summary">
+                <font colot='gray'>{$chapter->title}</font>
             </div>
             <div class="mdui-panel-item-summary">
                 <font colot='gray'>{:mb_strlen(preg_replace("/[\s　]/","",urldecode($chapter->body)))}字</font>
             </div>
-            <div class="mdui-panel-item-summary">
-                <font colot='gray'>{:date("m-d H:i:s", $chapter->sync_time)}</font>
-            </div>
+            <!-- <div class="mdui-panel-item-summary">
+                <font colot='gray'>{:date("m-d H:i", $chapter->sync_time)}</font>
+            </div> -->
             <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
         </div>
         <div class="mdui-panel-item-body">
@@ -29,9 +33,8 @@
             </div>
 
             <div class="mdui-panel-item-actions">
-                <a href="{:url('Novel/sc?chapter_id=' . $chapter->chapterID)}" target="_blank"><button class="mdui-btn mdui-ripple">阅读</button></a>
-                <button class="mdui-btn mdui-ripple" ng-click="like('{$chapter->chapterID}');"><i class="mdui-icon material-icons">{{likeIcon.get('{$chapter->chapterID}')}}</i><span class="mdui-chip-title">{{likeCount.get('{$chapter->chapterID}')}}</span></button>
-                <button class="mdui-btn mdui-ripple"><i class="mdui-icon material-icons">remove_red_eye</i><span class="mdui-chip-title">{$chapter->read_count}</span></button>
+                <a href="{:url('Novel/sc?chapter_id=' . $chapter->chapterID)}" target="_blank"><button class="mdui-btn mdui-ripple"><i class="mdui-icon material-icons">remove_red_eye</i><span class="mdui-chip-title">阅读&nbsp;&nbsp;{$chapter->read_count}</span></button></a>
+                <button class="mdui-btn mdui-ripple mdui-text-color-theme-icon" ng-click="like('{$chapter->chapterID}');"><i class="mdui-icon material-icons">{{likeIcon.get('{$chapter->chapterID}')}}</i><span class="mdui-chip-title">{{likeCount.get('{$chapter->chapterID}')}}</span></button>
             </div>
         </div>
     </div>

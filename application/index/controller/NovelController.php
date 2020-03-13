@@ -245,26 +245,32 @@ class NovelController extends Controller
     
     public function publishedChapters()
     {
-        if (!UserModel::isLogin())
-            return $this->error('请先登录', url('User/goLogin'));
-        $userID = session('user_id');
         $chapters = new ChapterModel();
-        $chapters->where("kind=0 and publish_state=1 and del=0");
+        $targetUserID = Request::instance()->param('user_id');
+        if ($targetUserID != null && !empty($targetUserID))
+            $chapters->where("kind=0 and publish_state=1 and del=0 and userID='$targetUserID'");
+        else
+            $chapters->where("kind=0 and publish_state=1 and del=0");
         $chapters->order('publish_time desc');
         $chapters = $chapters->paginate(30);
         
-        $likes = new ChapterLikeModel();
-        $likes->where("userID = '$userID'");
-        $likes = $likes->select();
         $myLikes = array();
-        if ($likes != null)
+        if (UserModel::isLogin())
         {
-            foreach ($likes as $like)
+            $userID = session('user_id');
+            $likes = new ChapterLikeModel();
+            $likes->where("userID = '$userID'");
+            $likes = $likes->select();
+            if ($likes != null)
             {
-                array_push($myLikes, $like->chapterID);
+                foreach ($likes as $like)
+                {
+                    array_push($myLikes, $like->chapterID);
+                }
             }
         }
         
+        $this->assign('title', '分享广场');
         $this->assign('chapters', $chapters);
         $this->assign('likes', $likes);
         $this->assign('myLikes', $myLikes);
