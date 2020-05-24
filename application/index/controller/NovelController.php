@@ -111,7 +111,7 @@ class NovelController extends Controller
             return $this->error('没有这篇章节');
         
         // 保存到阅读次数，并且避免同一个人反复刷阅读
-        if (session('read_chapter_' . $chapterID) == null)
+        if (empty(session('read_chapter_' . $chapterID)))
         {
             session('read_chapter_' . $chapterID, '1');
             $chapter['read_count'] = $chapter['read_count'] + 1;
@@ -300,7 +300,6 @@ class NovelController extends Controller
         }
         
         $this->assign('chapters', $chapters);
-        $this->assign('likes', $likes);
         $this->assign('myLikes', $myLikes);
         return $this->fetch('publishedChapters');
     }

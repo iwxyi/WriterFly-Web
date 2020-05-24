@@ -40,13 +40,15 @@
         {eq name="$d" value="mzfy"}写作天下(PC版) 下载{else/}Windows 下载{/eq}</a>
     <span>　　</span>
     <select class="mdui-select" mdui-select ng-model="download" id="mored">
-        <option>Linux 内测</option>
-        <option>Windows 内测</option>
         <option>码字风云 下载</option>
+        <option>Windows 内测</option>
+        <option>Mac 内测</option>
+        <option>Linux 内测（旧）</option>
         <option>Android-v7a 体验</option>
         <option>Android-x86 体验</option>
-        <option disabled>Mac 未开放</option>
         <option disabled>iOS 未开放</option>
+        <option disabled>微信小程序 未开放</option>
+        <option disabled>VSCode扩展 未开放</option>
         <!-- <option>百度网盘(历史版本)</option> -->
         <option disabled>更多平台敬请期待</option>
     </select>
@@ -64,8 +66,20 @@
     
     <div class="mdui-typo-display-1">功能</div>
     <ol>
-        <li><strong>自由的目录</strong>：自动序号，拖拽排序，随意调整</li>
-        <li><strong>自定义界面</strong>：全局自定义主题、风格，可使用CSS代码</li>
+        <li><strong>自由的目录</strong></li>
+        <ol>
+            <li><strong>自动序号</strong></li>
+            <li><strong>拖拽导出</strong></li>
+            <li><strong>日记模式</strong></li>
+            <li><strong>极速加载</strong></li>
+        </ol>
+        <li><strong>自定义界面</strong></li>
+        <ol>
+            <li><strong>主题管理</strong></li>
+            <li><strong>夜间模式</strong></li>
+            <li><strong>动态按钮</strong></li>
+            <li><strong>CSS支持</strong></li>
+        </ol>
         <li><strong>智能标点系统</strong>：独有的强大又省力的标点 AI</li>
         <ol>
             <li><strong>智能引号</strong>：增删移动全在一键之间</li>
@@ -75,40 +89,67 @@
         </ol>
         <li><strong>名片库系统</strong>：为文中所有人物、事物创建名片</li>
         <ol>
-            <li><strong>名字高亮</strong>，直观高效</li>
-            <li><strong>鼠标悬浮</strong>：随时查看简介与详情</li>
-            <li><strong>章节出现</strong>的名片一览</li>
-            <li><strong>快速搜索</strong>所有名片</li>
+            <li><strong>名字高亮</strong></li>
+            <li><strong>悬浮预览</strong></li>
+            <li><strong>实时侧边栏</strong></li>
+            <li><strong>全书检索</strong></li>
+            <li><strong>一键全局更名</strong></li>
         </ol>
-        <li><strong>云端同步</strong>：稳定、全自动，多一重保险。支持同步到手机。</li>
-        <li><strong>云排行榜</strong>：所有用户在线拼字</li>
-        <li><strong>多线大纲</strong>：主线/辅线/事件线/感情线…等</li>
-        <li><strong>语言高亮</strong>：人物语言描写高亮显示</li>
-        <li><strong>章内标注</strong>：章节内埋坑备注，可作细纲，导出、发布时自动去除</li>
+        <li><strong>云端同步</strong>：稳定、全自动，支持同步到手机。</li>
+        <li><strong>云排行榜</strong></li>
+        <li><strong>拼字房间</strong></li>
+        <li><strong>多线大纲</strong></li>
+        <li><strong>语言高亮</strong></li>
+        <li><strong>章内标注</strong>：埋坑备注，可作细纲，导出、发布时自动去除</li>
         <li><strong>高潮模式</strong>：自动识别当前情节激烈程度，微调小说AI</li>
-        <li><strong>导入导出</strong>：花样自定义格式，便捷的多文件拖拽导入导出</li>
-        <li><strong>字数统计</strong>：精确到几个空格的数量</li>
+        <li><strong>导入导出</strong></li>
+        <ol>
+            <li><strong>全书导出txt/Word</strong></li>
+            <li><strong>全书TXT导入</strong></li>
+            <li><strong>单章/单卷拖拽导入/导出</strong></li>
+            <li><strong>导出彩色长图</strong></li>
+        </ol>
+        <li><strong>精确统计</strong></li>
         <li><strong>同音词覆盖</strong>：选词错误，无需删除，直接覆盖旧内容</li>
-        <li><strong>敏感词检测</strong>：高亮所有敏感词，可自定义词库</li>
-        <li><strong>多功能替换</strong>：简繁转换、敏感词替换、敏感词转拼音等</li>
-        <li><strong>自动分段</strong>：换行/排版时，过长段落自动在合适的地方分段</li>
-        <li><strong>词语提示</strong>：输入时自动提示同义词、相关词、常用句</li>
-        <li><strong>随机取名</strong>：最轻便的取名方式，要啥来啥</li>
+        <li><strong>敏感词检测</strong></li>
+        <li><strong>多功能替换</strong></li>
+        <ol>
+            <li><strong>简繁转换</strong></li>
+            <li><strong>敏感词替换</strong></li>
+            <li><strong>敏感词转拼音</strong></li>
+            <li><strong>阿拉伯数字转中文</strong></li>
+        </ol>
+        <li><strong>自动分段</strong></li>
+        <li><strong>词句提示</strong>：同义词、相关词、常用句自动提示</li>
+        <li><strong>随机取名</strong></li>
         <li><strong>一键排版</strong>：全自动，包括英文空格、首字母大写、长段落自动分段等</li>
-        <li><strong>资源搜索</strong>：全局浏览所有资源文件，快速搜索</li>
-        <li><strong>小黑屋</strong>：多种模式强制码字</li>
-        <li><strong>剪贴板</strong>：保存所有复制的历史记录</li>
+        <li><strong>资源搜索</strong></li>
+        <ol>
+            <li><strong>参考词句</strong></li>
+            <li><strong>实时提示</strong></li>
+            <li><strong>近义词</strong></li>
+            <li><strong>自由扩展</strong></li>
+        </ol>
+        <li><strong>小黑屋</strong></li>
+        <li><strong>剪贴板</strong></li>
         <li><strong>回收板</strong>：记录所有删除/剪切的长文本，避免丢失</li>
-        <li><strong>小说类型</strong>：只需小说名便可判断小说是什么类型</li>
-        <li><strong>输入动画</strong>：文字平滑输入、光标平滑移动</li>
+        <li><strong>导出长图</strong>：带色彩高亮的全文长图</li>
+        <li><strong>风格判断</strong>：只需小说名便可判断小说是什么类型</li>
+        <li><strong>输入动画</strong></li>
         <li><strong>微动背景</strong>：在不影响注意力的情况下，微调背景颜色</li>
         <li><strong>情绪滤镜</strong>：智能分析人物情绪，添加相应背景滤镜</li>
         <li><strong>场景图片</strong>：识别故事环境，设置对应的背景图片</li>
-        <li><strong>错词替换</strong>：错别字高亮和一键替换</li>
-        <li><strong>汉语词典</strong>：内置完整词典，显示所有释义，附加成语接龙功能</li>
-        <li><strong>主题管理</strong>：强大的主题功能，切换色彩、词库、CSS样式、动态背景</li>
-        <li><strong>回收站</strong>：多种类型的回收站，强力后悔药</li>
+        <li><strong>氛围音乐</strong>：跟随码字正文的环境气氛，播放应景音乐</li>
+        <li><strong>错词替换</strong></li>
+        <li><strong>汉语词典</strong></li>
+        <li><strong>主题管理</strong></li>
+        <li><strong>每日字数</strong></li>
         <li><strong>章节快照</strong>：自动备份章节编辑历史，确保内容万无一失</li>
+        <li><strong>时间轴大纲</strong>：按时间发展事件线，与大纲无缝转换</li>
+        <li><strong>话本编辑器</strong>：超好用的对话编辑，角色模板一键插入</li>
+        <li><strong>全书书签</strong></li>
+        <li><strong>全书搜索</strong></li>
+        <li><strong>回收站</strong></li>
     </ol>
 
     <div class="mdui-typo-display-1">以用户为本的小细节</div>
@@ -172,7 +213,7 @@ $scope.$watch('download', function(newVal, oldVal, scope){
         $scope.addDownload('Linux');
         break;
     case 'Mac 内测':
-        window.location.href=dir+"写作天下Beta-Mac.zip";
+        window.location.href=dir+"写作天下Beta-Mac.dmg";
         $scope.addDownload('Mac');
         break;
     case '码字风云 下载':
